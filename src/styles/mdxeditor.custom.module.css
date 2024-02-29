@@ -1,0 +1,41 @@
+
+.checkboxInput {
+  padding-top: 0.41rem;
+  padding-bottom: 0.41rem;
+}
+
+.largeDialogContentOverrides {
+  max-height: calc(80vh) !important;
+  overflow-y: scroll !important;
+}
+
+.dialogTitle {
+  font-size: var(--text-base);
+  font-weight: 600;
+  padding-bottom: var(--spacing-2);
+}
+
+.frontmatterDialogForm {
+  max-width: max-content !important;
+  /*width: max-content !important;*/
+}
+
+.tinyRefreshButton {
+  zoom: 0.5;
+}
+
+.imageSaveDialogButtons {
+
+}
+
+/* line wraps when previewing MD in richedit mode should reflect lfs like they appear on the site. */
+div[contenteditable="true"] {
+  p, ul {
+   span {
+     white-space: normal;
+     color: #5d5d5d;
+     font-family: Source Sans Pro Web, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
+   }
+  }
+}
+

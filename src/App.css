@@ -1,0 +1,32 @@
+#root {
+  --toastify-toast-width: calc(80vw);
+}
+
+.inline-img-graphics {
+  height: 32px;
+}
+
+.inline-img-graphics > img {
+  display: inline-block;
+  border-style: dotted;
+  border-color: #5d5d5d;
+  border-radius: 2px;
+
+  margin: 0;
+  padding: 1px;
+}
+
+.previewImgFilename {
+  width: 5rem;
+}
+
+#uploadMarkdownButtonHidden {
+  display:none !important;
+}
+
+.developer_div {
+  position: fixed;
+  bottom: 1rem;
+  left: 5px;
+  z-index: 100;
+}

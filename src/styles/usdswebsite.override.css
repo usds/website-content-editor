@@ -1,0 +1,45 @@
+/*
+ The website uses the default stylesheet from https://usds.github.io/website-staging/assets/stylesheets/styles.css
+   found in index.html
+
+ These are meant to override some of the defaults
+
+ */
+
+.site-c-apply {
+  overflow: auto;
+  min-height: 210em;
+  width: 100%;
+  border: none
+}
+
+.site-c-section, .site-c-section__body {
+  margin: 0;
+}
+
+@media all and (min-width: 40em) {
+  .site-c-apply {
+    min-height: 200rem
+  }
+}
+
+div.site-c-blog-dateline, div.site-c-blog-byline {
+  white-space: normal;
+  color: #5d5d5d;
+  font-family: Source Sans Pro Web, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
+}
+
+.border-dotted-light {
+  border-style: dotted;
+  color: rgba(34, 89, 151, 0.13);
+}
+
+.frontmatterComponent {
+  user-select: none;
+  white-space: normal;
+  border-bottom: 12px;
+}
+
+hr {
+  padding: 1em;
+}
