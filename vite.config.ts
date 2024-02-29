@@ -10,6 +10,7 @@ import {viteStaticCopy} from "vite-plugin-static-copy";
 // https://vite-pwa-org.netlify.app/guide/
 
 export default defineConfig({
+  base: "./",
   plugins: [
     react(),
     // svgr "inlines" .svg so they can be easily turned into React components.
