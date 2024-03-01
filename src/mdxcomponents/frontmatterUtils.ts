@@ -255,21 +255,29 @@ export const saveDataToZip = async (markdownstr: string) => {
   }
 
 // add the carousel_image to this list of imgs to be downloaded
-  {
+  if (yamlFields.carousel_image.trim().length) {
     // normalize the carousel image
-    const filename = getFilnamePartOfUrlPath(yamlFields.carousel_image) ?? "missing-image.jpg";
+    const filename = getFilnamePartOfUrlPath(yamlFields.carousel_image);
     imagesFromMd.push(`${imagedir}/${filename}`);
   }
 
   for (const eachimgsr of imagesFromMd) {
-    const response = await fetch(eachimgsr);
-    if (!response.ok) {
-      console.error(`failed to fetch "${eachimgsr}"`, response);
-      continue;
+    try {
+      const response = await fetch(eachimgsr, {
+        cache: 'force-cache',
+      });
+      if (!response.ok) {
+        console.error(`failed to fetch "${eachimgsr}"`, response);
+        continue;
+      }
+      const blob = await response.blob();
+      const filename = getFilnamePartOfUrlPath(eachimgsr);
+      zip.file(`${imagedir}/${filename}`, blob);
+    } catch(err) {
+      console.error(`Error for fetching ${eachimgsr}`, err);
+      showToast(`Some images could not be saved. Check they are not on a 3rd party site. Image src should start with / not https. 
+      Download from site and upload into the markdown to fix.`, "warning");
     }
-    const blob = await response.blob();
-    const filename = getFilnamePartOfUrlPath(eachimgsr);
-    zip.file(`${imagedir}/${filename}`, blob);
   }
 
 // now generat the zip file and trigger a "download" prompt

@@ -56,7 +56,12 @@ export class FrontmatterCustomNode extends DecoratorNode<React.JSX.Element> {
     const newDiv = document.createElement("div");
     newDiv.className = "frontmatterComponent";
 
-    if (yamlStr.trim() === "" || fields.title.trim() === "" && fields.date.trim() === "") {
+    if (yamlStr.trim() === "") {
+      newDiv.innerHTML = ''; // things get confusing when pasted into the document without a frontmatter
+      return newDiv;
+    }
+
+    if (fields.title.trim() === "" && fields.date.trim() === "") {
       // assume this is a new template and show condensed ui
       newDiv.innerHTML = `
         <div class="usa-alert usa-alert--info">
@@ -72,6 +77,7 @@ export class FrontmatterCustomNode extends DecoratorNode<React.JSX.Element> {
         </div>
       `;
       return newDiv;
+
     }
 
     // language=HTML

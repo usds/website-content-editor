@@ -46,6 +46,5 @@ export const toMarkdownOptions: Options = {
   bullet: "-",
   bulletOther: "+",
   emphasis: "_",
-  resourceLink: true,
 };
 

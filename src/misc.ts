@@ -33,7 +33,13 @@ export const shortDateToNanoId = (dateStr: string): string => {
   // `0123456789abcdefghijklmnopqrstu` `vwxyz`
   // Timestamp often starts the same leading character and ends with "0" so just remove.
   // `lqw277k0` => `qw277k`
-  return tempresult.substring(1, tempresult.length-1);
+  tempresult.replace('a','v')
+  return tempresult
+    .replace('a','v')
+    .replace('e','w')
+    .replace('i','x')
+    .replace('o','z')
+    .substring(1, tempresult.length-1);
 }
 
 export const cleanupFilename = (instr: string): string => {

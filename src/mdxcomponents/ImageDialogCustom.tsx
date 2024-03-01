@@ -81,10 +81,10 @@ export const ImageDialogCustom: React.FC = () => {
             {filename.length? `Current: "${filename}"`: null }
           </div>
 
-          <div className={styles.formField}>
-            <label htmlFor="shortcode"> <input id={"shortcode"} type={"checkbox"} {...register('shortcode')}
-                                               className={""}/> Check to generate shortcode name</label>
-          </div>
+          {/*<div className={styles.formField}>*/}
+          {/*  <label htmlFor="shortcode"> <input id={"shortcode"} type={"checkbox"} {...register('shortcode')}*/}
+          {/*                                     className={""}/> Check to generate shortcode name</label>*/}
+          {/*</div>*/}
 
           <div className={styles.formField}>
             <label htmlFor="altText">Alt (Accessibility: detailed image description):</label>

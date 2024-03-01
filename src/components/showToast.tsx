@@ -10,7 +10,7 @@ export const showToast = (
       const cleanmsg = message.replace(/\W/gi, "_").substring(0, 512);
       return `id_${cleanmsg}`;
     }
-    return getShortNanoid();
+    return `id-1`;
   })();
   const msg = (message as Error)?.message ?? message;
 
@@ -25,9 +25,9 @@ export const showToast = (
     </div>,
     {
       toastId,
-      autoClose: 50000,
+      autoClose: 15000,
       delay: 10,
-      closeButton: false,
+      closeButton: true,
       position: "bottom-center",
       hideProgressBar: true,
     },
