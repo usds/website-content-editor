@@ -7,6 +7,8 @@ site.
 
 Results of edits can be saved to the local device as a zip file, including any images used by the markdown.
 
+Site is github pages deployed here: https://usds.github.io/website-content-editor/
+
 ## What's working:
 
 - Heavily leverages the open source project: [MDXEditor](https://github.com/mdx-editor/editor)
