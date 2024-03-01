@@ -83,6 +83,7 @@ tags: [${tags}]
 
 export const getYamlBlogHeader = (fields: BlogFrontMatterFields): string => {
   const tags = '[' + fields.tags?.map(s => `'${s}'`).join(',') + ']';
+  const carousel_show = fields.carousel_show ? "true" : "false";
   return `# Page template info (DO NOT EDIT)
 layout: default
 blog_page: true
@@ -95,13 +96,13 @@ carousel_image: ${fields.carousel_image}
 # accessibility text for image
 carousel_image_alt_text: "${fields.carousel_image_alt_text}"
 # should show on news and blog page. ordered by date prefix in filename
-carousel_show: ${fields.carousel_show ? "true" : "false"}
+carousel_show: ${carousel_show}
 
 # Blog detail page (Edit this)
 title: "${fields.title}"
 dateline_str: "${fields.date}"
 readtime_str: "${fields.readtime_minutes}"
-byline_str: author: "${fields.author}"
+author: "${fields.author}"
 permalink: ${fields.permalink}
 basename: "${fields.basename}"
 tags: [${tags}]
