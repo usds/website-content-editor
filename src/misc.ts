@@ -12,12 +12,15 @@ export const getFilnamePartOfUrlPath = (pathstr?: string) => pathstr?.split("/")
 export const forceTypeBoolean = (value: string | null | boolean): boolean | null =>
   typeof value === 'boolean' ? value : value === 'true' ? true : value === 'false' ? false : null;
 
-export const toUTCDate = (dateStr: string | Date): string => {
+export const toUTCDate = (date: string | Date | undefined): string => {
+  if ((typeof date === "string") && (date.trim().length === 0 || date === "Invalid date")) {
+    date = undefined;
+  }
   // have to be careful of the timezone shifting days because of UTC offsets.
   // e.g. Date("1/1/2020") gets turned into "Dec 31, 2019"
   // But "Jan 1, 2020" doesn't get converted. Such a horrible API.
   // so, we're using moment.js
-  const dateObj = moment(dateStr);
+  const dateObj = moment(date);
   return dateObj.toISOString().split("T")[0] || ""
 }
 
@@ -33,13 +36,13 @@ export const shortDateToNanoId = (dateStr: string): string => {
   // `0123456789abcdefghijklmnopqrstu` `vwxyz`
   // Timestamp often starts the same leading character and ends with "0" so just remove.
   // `lqw277k0` => `qw277k`
-  tempresult.replace('a','v')
+  tempresult.replace('a', 'v')
   return tempresult
-    .replace('a','v')
-    .replace('e','w')
-    .replace('i','x')
-    .replace('o','z')
-    .substring(1, tempresult.length-1);
+    .replace('a', 'v')
+    .replace('e', 'w')
+    .replace('i', 'x')
+    .replace('o', 'z')
+    .substring(1, tempresult.length - 1);
 }
 
 export const cleanupFilename = (instr: string): string => {

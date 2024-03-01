@@ -54,12 +54,21 @@ export const yamlToBlogFields = (yamlstr: string): BlogFrontMatterFields => {
   return result;
 }
 
-
-export const getYamlBlogHeader = (fields: BlogFrontMatterFields): string => {
+/** there's a pending change with the website to rename some fields */
+export const getYamlBlogHeaderNew = (fields: BlogFrontMatterFields): string => {
   const tags = '[' + fields.tags?.map(s => `'${s}'`).join(',') + ']';
   return `# Page template info (DO NOT EDIT)
 layout: default
 blog_page: true
+# Carousel (Edit this)
+carousel_title: "${fields.carousel_title}"
+carousel_summary: "${fields.carousel_summary}"
+# partial path to image
+carousel_image: ${fields.carousel_image}
+# accessibility text for image
+carousel_image_alt_text: "${fields.carousel_image_alt_text}"
+# should show on news and blog page. ordered by date prefix in filename
+carousel_show: ${fields.carousel_show ? "true" : "false"}
 
 # Blog detail page (Edit this)
 title: "${fields.title}"
@@ -69,6 +78,14 @@ author: "${fields.author}"
 permalink: ${fields.permalink}
 basename: "${fields.basename}"
 tags: [${tags}]
+`;
+}
+
+export const getYamlBlogHeader = (fields: BlogFrontMatterFields): string => {
+  const tags = '[' + fields.tags?.map(s => `'${s}'`).join(',') + ']';
+  return `# Page template info (DO NOT EDIT)
+layout: default
+blog_page: true
 
 # Carousel (Edit this)
 carousel_title: "${fields.carousel_title}"
@@ -79,6 +96,15 @@ carousel_image: ${fields.carousel_image}
 carousel_image_alt_text: "${fields.carousel_image_alt_text}"
 # should show on news and blog page. ordered by date prefix in filename
 carousel_show: ${fields.carousel_show ? "true" : "false"}
+
+# Blog detail page (Edit this)
+title: "${fields.title}"
+dateline_str: "${fields.date}"
+readtime_str: "${fields.readtime_minutes}"
+byline_str: author: "${fields.author}"
+permalink: ${fields.permalink}
+basename: "${fields.basename}"
+tags: [${tags}]
 `;
 }
 
