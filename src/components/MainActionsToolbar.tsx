@@ -33,7 +33,9 @@ export const MainActionsToolbar = (props: {
     const cleanmdtext = mdtext.replace(`<usds@omb.eop.gov>`, 'usds@omb.eop.gov');
     props.mdxeditorref?.current?.setMarkdown(cleanmdtext);
     localStorage.setItem(MARKDOWN_LOCAL_STORAGE_KEY, mdtext);
-
+    setTimeout(() => {
+      window.location.reload(); // needs some help loading cached images
+    }, 250);
     // todo: go through images and see what's missing from cache and prompt for files
   }
 

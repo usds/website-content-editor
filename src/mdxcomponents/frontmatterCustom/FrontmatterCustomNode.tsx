@@ -63,7 +63,7 @@ export class FrontmatterCustomNode extends DecoratorNode<React.JSX.Element> {
           <div class="usa-alert__body">
             <h4 class="usa-alert__heading">Getting Started</h4>
             <p class="usa-alert__text">
-              Click the <span class="inline-img-graphics"><img src="/img/crab-clean.svg"/></span> button in 
+              Click the <span class="inline-img-graphics"><img src="./img/crab-clean.svg"/></span> button in 
               the toolbar to edit page meta information.<br/><br/>
               Content is saved on your local browser, so refreshing won't lose edits.<br/><br/>
               This is a public site, but NOT content or text every leaves your local machine.<br/><br/>
