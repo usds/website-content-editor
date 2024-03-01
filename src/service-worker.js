@@ -64,8 +64,12 @@ try {
 
     // fallback to usds site
     if (url.pathname.indexOf("-img/") > -1) {
-      const pathname = url.pathname.replace("/news-and-blog/", "/"); // preview image may have
-      const newRequestUrl = `https://usds.github.io/website-staging/news-and-blog${pathname}`;
+      // get the pathname without all the site specific urls.
+      // This is a horrible approach because it hardcodes the path
+      const normalizedPath = url.pathname
+        .replace("/news-and-blog/", "/") // we add it back in below
+        .replace("/website-content-editor/","/");
+      const newRequestUrl = `https://usds.github.io/website-staging/news-and-blog${normalizedPath}`;
 
       console.log(`found possible news-and-blog in path, so checking staging server for "${newRequestUrl}"`);
       // Important: no await here, since that that would block
