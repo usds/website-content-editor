@@ -47,10 +47,9 @@ function App() {
   useEffect(() => {
     (function () {
       try {
-        const localMd = localStorage.getItem(MARKDOWN_LOCAL_STORAGE_KEY);
-        const saved = localMd ?? getDefaultMarkdown();
-        mdxeditorref.current?.setMarkdown(saved);
-        setOldMarkdown(saved);
+        const localMd = localStorage.getItem(MARKDOWN_LOCAL_STORAGE_KEY) ?? "";
+        mdxeditorref.current?.setMarkdown(localMd);
+        setOldMarkdown(localMd);
       } catch (e) {
         console.error(e);
       }
