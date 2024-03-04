@@ -4,6 +4,7 @@
   "license": "MIT",
   "version": "0.0.1",
   "type": "module",
+  "homepage": "usds.github.io/website-content-editor",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

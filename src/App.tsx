@@ -50,7 +50,7 @@ function App() {
     <Fragment>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout/>} errorElement={<ErrorElement/>}>
+          <Route path="/" element={<Layout/>}>
             <Route path="/" element={<HomePage/>}/>
             <Route path="/about" element={<AboutPage/>}/>
             <Route path="/blogedit" element={<BlogEditorPage/>}/>
