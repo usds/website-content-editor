@@ -16,6 +16,7 @@ import {frontmatter} from 'micromark-extension-frontmatter'
 import {$createFrontmatterCustomNode, $isFrontmatterCustomNode, FrontmatterCustomNode} from './FrontmatterCustomNode.tsx'
 import {LexicalFrontmatterCustomVisitor} from './LexicalFrontmatterCustomVisitor.ts'
 import {MdastFrontmatterCustomVisitor} from './MdastFrontmatterCustomVisitor.ts'
+import {getDefaultMarkdown} from "../frontmatterUtils.ts";
 
 type YamlTypes = "blog" | "";
 
@@ -40,13 +41,13 @@ export const frontmatterYamlType$ = Cell<FrontmatterCustomYamlParams>({
 export const insertFrontmatterCustom$ = Action((r) => {
   r.sub(r.pipe(insertFrontmatterCustom$, withLatestFrom(rootEditor$)), ([, rootEditor]) => {
     rootEditor?.update(() => {
-      const firstItem = $getRoot().getFirstChild()
+      const firstItem = $getRoot().getFirstChild();
       if (!$isFrontmatterCustomNode(firstItem)) {
-        const fmNode = $createFrontmatterCustomNode('"": ""')
+        const fmNode = $createFrontmatterCustomNode(getDefaultMarkdown());
         if (firstItem) {
-          firstItem.insertBefore(fmNode)
+          firstItem.insertBefore(fmNode);
         } else {
-          $getRoot().append(fmNode)
+          $getRoot().append(fmNode);
         }
       }
     })
@@ -88,7 +89,7 @@ export const hasFrontmatterCustom$ = Cell(false, (r) => {
  * A plugin that adds support for frontmatter.
  * @group Frontmatter
  */
-export const frontmatterPlugin = realmPlugin<FrontmatterCustomYamlParams>({
+export const frontmatterCustomPlugin = realmPlugin<FrontmatterCustomYamlParams>({
   init: (realm, params) => {
     realm.pubIn({
       [frontmatterYamlType$]: params?.yamlType ?? "",

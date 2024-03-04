@@ -59,7 +59,7 @@ export const FrontmatterCustomEditor = ({yaml, onChange}: FrontmatterCustomEdito
     watch, // used to show character count
     formState: {errors}
   } = useForm({
-    defaultValues: getFrontMatterFields()
+    values: getFrontMatterFields()
   });
 
   const useOnceRef = useRef(false);
@@ -94,11 +94,14 @@ export const FrontmatterCustomEditor = ({yaml, onChange}: FrontmatterCustomEdito
 
     const oldPermalink = getValues("permalink");
     const fields = getValues();
-    const {permalink} = generateFields(fields);
+    const {basename, permalink} = generateFields(fields, true);
 
-    if ((oldPermalink !== permalink) &&
-      !confirm(`The permalink used to access this page will change.\n\nContinue?`)) {
-      return;
+    if (oldPermalink !== permalink) {
+      if (!confirm(`The permalink used to access this page will change.\n\nContinue?`)) {
+        return;
+      }
+      // we'll need to update the basename too.
+      setValue("basename", basename ?? "");
     }
 
     if (permalink?.length) {
@@ -129,6 +132,7 @@ export const FrontmatterCustomEditor = ({yaml, onChange}: FrontmatterCustomEdito
   const previewImgFilename = cleanupFilename(getValues("carousel_image"));
   const fileInputDefaultImage = previewImgFilename.length ? `/mdedit/img/${previewImgFilename}` : undefined
 
+  console.log(`inital value for carousel_show: ${getValues("carousel_show")}`)
   return (
     <Fragment>
       <Dialog.Root open={frontmatterDialogOpen} onOpenChange={(open) => setFrontmatterDialogOpen(open)}>
@@ -265,7 +269,8 @@ export const FrontmatterCustomEditor = ({yaml, onChange}: FrontmatterCustomEdito
                   <Controller
                     control={control}
                     name="carousel_show"
-                    render={({field: {onChange, value}}) => {
+                    defaultValue={getValues("carousel_show")}
+                    render={({field: {onChange, name, value}}) => {
                       const checked = forceTypeBoolean(value) ?? false;
                       return (
                         <Checkbox

@@ -1,158 +1,65 @@
-import {
-  MDXEditor,
-  headingsPlugin,
-  listsPlugin,
-  quotePlugin,
-  thematicBreakPlugin,
-  BoldItalicUnderlineToggles,
-  toolbarPlugin,
-  DiffSourceToggleWrapper,
-  BlockTypeSelect,
-  diffSourcePlugin,
-  linkPlugin,
-  linkDialogPlugin,
-  InsertImage,
-  imagePlugin,
-  MDXEditorMethods,
-  InsertThematicBreak,
-  InsertTable, tablePlugin, CreateLink, ListsToggle
-} from '@mdxeditor/editor';
-
-import React, {Fragment, useEffect, useRef, useState} from "react";
-import {ImageDialogCustom} from "./mdxcomponents/ImageDialogCustom.tsx";
-import {frontmatterPlugin} from "./mdxcomponents/frontmatterCustom";
-import {InsertFrontmatterCustom} from "./mdxcomponents/frontmatterCustom/InsertFrontmatterCustom.tsx";
-import {MainActionsToolbar} from "./components/MainActionsToolbar.tsx";
-import {
-  CACHE_NAME,
-  MARKDOWN_LOCAL_STORAGE_KEY,
-  toMarkdownOptions,
-} from "./types/commontypes.ts";
 import {ToastContainer} from "react-toastify";
 
 import '@mdxeditor/editor/style.css';
 import './styles/usdswebsite.override.css';
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-import {Button} from "@trussworks/react-uswds";
-import {getDefaultMarkdown} from "./mdxcomponents/frontmatterUtils.ts";
-import {devResetEverything} from "./misc.ts";
+import {Fragment} from "react";
+import {BlogEditorPage} from "./pages/BlogEditorPage.tsx";
+import {BrowserRouter, Routes, Route, NavLink, Outlet} from "react-router-dom";
+import {HomePage} from "./pages/HomePage.tsx";
+import {ErrorElement} from "./components/ErrorElement.tsx";
+import {NavList, Header, Title,} from "@trussworks/react-uswds";
+import {AboutPage} from "./pages/AboutPage.tsx";
 
 // we use the uswds styles from usds.github.io/website-staging
 // import '@uswds/uswds/css/uswds.css';
 
-function App() {
-  const [oldMarkdown, setOldMarkdown] = useState<string>("");
-  const mdxeditorref = useRef<MDXEditorMethods>(null);
-  useEffect(() => {
-    (function () {
-      try {
-        const localMd = localStorage.getItem(MARKDOWN_LOCAL_STORAGE_KEY) ?? "";
-        mdxeditorref.current?.setMarkdown(localMd);
-        setOldMarkdown(localMd);
-      } catch (e) {
-        console.error(e);
-      }
-    })();
-  }, [mdxeditorref, setOldMarkdown]);
 
-  const saveMdText = (mdtext: string) => {
-    localStorage.setItem(MARKDOWN_LOCAL_STORAGE_KEY, mdtext);
-  }
-
-  // stash upload into the browser cache. We use a service worker to
-  // serve back out.
-  const imageUploadHandler = async (imageFile: File) => {
-    try {
-      const webcache = await caches.open(CACHE_NAME);
-      // const url = `${image.name}`;
-      const buffer = await imageFile.arrayBuffer();
-      const response = new Response(buffer, {
-        headers: {
-          "Content-Type": imageFile.type,
-          "Content-Length": String(imageFile.size)
-        },
-        status: 200,
-        statusText: "ok",
-      });
-
-      // if the checkbox in the ui is ticked, generate a short filename.
-      // await newUrlFromFile(imageFile);
-      const newUrl = `${imageFile.name}`;
-      await webcache.put(newUrl, response);
-      return newUrl;
-    } catch (err) {
-      console.error(err);
-      return "";
-    }
-  };
-
+const Layout = () => {
   return (
     <Fragment>
-      <MainActionsToolbar mdxeditorref={mdxeditorref}/>
-      <main id="main-content" role="main">
-        <div className="grid-container">
-          <div className="grid-row tablet:flex-row-reverse">
-            <div
-              className="tablet:grid-col-8 desktop:grid-col-12 margin-bottom-9 tablet:padding-right-4 site-c-project-content usa-prose">
-              <MDXEditor
-                ref={mdxeditorref}
-                className={"grid-container"}
-                contentEditableClassName={"tablet:grid-col-8 desktop:grid-col-12 margin-bottom-9 tablet:padding-right-4 site-c-project-content usa-prose"}
-                suppressHtmlProcessing={false}
-                markdown={""}
-                onChange={(mdtext) => saveMdText(mdtext)}
-                toMarkdownOptions={toMarkdownOptions}
-                plugins={[
-                  toolbarPlugin({
-                    toolbarContents: () => (
-                      <Fragment>
-                        {' '}
-                        <InsertFrontmatterCustom/>
-                        {' '}
-                        <DiffSourceToggleWrapper>
-                          <BlockTypeSelect/>
-                          <BoldItalicUnderlineToggles/>
-                          <CreateLink/>
-                          <ListsToggle/>
-                          <InsertThematicBreak/>
-                          {' '}
-                          <InsertImage/>
-                          {' '}
-                          <InsertTable/>
-                        </DiffSourceToggleWrapper>
-                      </Fragment>
-                    )
-                  }),
-                  diffSourcePlugin({diffMarkdown: oldMarkdown, viewMode: 'rich-text'}),
-                  frontmatterPlugin(),
-                  headingsPlugin({allowedHeadingLevels: [2, 3, 4]}),
-                  imagePlugin({imageUploadHandler, disableImageResize: false, ImageDialog: ImageDialogCustom}),
-                  linkDialogPlugin(),
-                  linkPlugin(),
-                  listsPlugin(),
-                  quotePlugin(),
-                  tablePlugin(),
-                  thematicBreakPlugin()
-                ]}/>
-            </div>
+      <Header basic>
+        <div className="usa-nav-container">
+          <div className="usa-navbar">
+            <Title>Website Content Editor</Title>
+            {/* A "layout route" is a good place to put markup you want to
+          share across all the pages on your site, like navigation. */}
+            <NavList items={
+              [<NavLink key={"homenavlink"} to="/">Home</NavLink>,
+                <NavLink key={"aboutlink"} to="/about">About</NavLink>,
+                <NavLink key={"blogedit"} to="/blogedit">News-and-blog editor</NavLink>]
+            } type="primary"/>
           </div>
         </div>
-      </main>
-      <ToastContainer limit={4}/>
-      <div className={"developer_div"}>
-        <Button
-          type={"button"}
-          accentStyle={"warm"}
-          outline={true}
-          unstyled={true}
-          onClick={()=> {
-            if (confirm("Clear all settings and data? This will lose everything and start fresh.\n\nContinue?")) {
-              void devResetEverything(mdxeditorref)
-            }
-          }}>Reset</Button></div>
+      </Header>
+
+
+      {/* An <Outlet> renders whatever child route is currently active,
+          so you can think about this <Outlet> as a placeholder for
+          the child routes we defined above. */}
+      <section className="usa-section">
+        <Outlet/>
+      </section>
     </Fragment>
-  )
+);
+}
+
+function App() {
+  return (
+    <Fragment>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout/>} errorElement={<ErrorElement/>}>
+            <Route path="/" element={<HomePage/>}/>
+            <Route path="/about" element={<AboutPage/>}/>
+            <Route path="/blogedit" element={<BlogEditorPage/>}/>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+      <ToastContainer limit={4}/>
+    </Fragment>
+  );
 }
 
 export default App

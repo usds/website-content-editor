@@ -2,8 +2,8 @@
 import YamlParser from "js-yaml";
 import {
   BLANK_BLOG_FRONTMATTER_FIELDS,
-  BlogFrontMatterFields,
-  DEFAULT_AUTHOR,
+  BlogFrontMatterFields, CACHE_NAME,
+  DEFAULT_AUTHOR, STARTER_BLOG_FRONTMATTER_FIELDS,
   toMarkdownOptions
 } from "../types/commontypes.ts";
 import {fromMarkdown} from "mdast-util-from-markdown";
@@ -129,23 +129,22 @@ export const generateBasename = (title: string): string => {
 /**
  * Just trying to consolidate all the url building to a single location.
  */
-export const generateFields = (fields: BlogFrontMatterFields): {
-  basename?: string, // if this is undefined, then function failed
-  imagedir?: string,  // references the -img/ directory
-  carousel_imagepath_formd?: string, // starts with /news-and-blog, used in MD
-  mdfilename?: string,
-  permalink?: string,
-  datedbasename?: string,
+export const generateFields = (fields: BlogFrontMatterFields, resetPermalink = false): {
+  basename: string, // if this is undefined, then function failed
+  imagedir: string,  // references the -img/ directory
+  carousel_imagepath_for_md: string, // starts with /news-and-blog, used in MD
+  mdfilename: string,
+  permalink: string,
+  datedbasename: string,
 } => {
   if (fields.title.length === 0) {
     showToast("You need to supply a title and date first", "error");
-    return {};
   }
   if (fields.date.length === 0) {
     // just default to today's date
     fields.date = getShortDate();
   }
-  const basename = (fields.basename.length) ? fields.basename : generateBasename(fields.title);
+  const basename = (fields.basename.length && !resetPermalink) ? fields.basename : generateBasename(fields.title);
   const randomStr = shortDateToNanoId(fields.date);
   const dateprefix = toUTCDate(fields.date);
   const datedbasename = `${dateprefix}-${basename}`;
@@ -153,14 +152,14 @@ export const generateFields = (fields: BlogFrontMatterFields): {
   // const permalink = `/news-and-blog/${fixedTitle}-${randomStr}`.replace("--", "-");
   // the `/news-and-blog/` part is ONLY for the preview/carousel image!
   const imagedir = `${datedbasename}-img`.replace("--", "-");
-  const carousel_imagepath_formd = `/news-and-blog/${imagedir}`;
+  const carousel_imagepath_for_md = `/news-and-blog/${imagedir}`;
   const mdfilename = `${datedbasename}.md`.replace("--", "-");
   const permalink = `/news-and-blog/${basename}-${randomStr}`.replace("--", "-");
 
-  return {basename, imagedir, carousel_imagepath_formd, mdfilename, datedbasename, permalink};
+  return {basename, imagedir, carousel_imagepath_for_md, mdfilename, datedbasename, permalink};
 };
 
-export const blogFieldsFixup = (fields: BlogFrontMatterFields): BlogFrontMatterFields => {
+export const blogFieldsFixup = (fields: BlogFrontMatterFields, resetPermalink = false): BlogFrontMatterFields => {
   if (fields.title.trim() === "") {
     showToast("Must have a title to continue.", "error");
     return fields;
@@ -171,7 +170,13 @@ export const blogFieldsFixup = (fields: BlogFrontMatterFields): BlogFrontMatterF
     fields.date = getShortDate();
   }
   // used if any item is missing.
-  const {basename, imagedir, carousel_imagepath_formd, mdfilename, datedbasename, permalink} = generateFields(fields);
+  const {
+    basename,
+    imagedir,
+    carousel_imagepath_for_md,
+    mdfilename,
+    datedbasename,
+    permalink} = generateFields(fields, resetPermalink);
   if (fields.basename.trim() === "") {
     fields.basename = basename ?? "";
   }
@@ -192,7 +197,7 @@ export const blogFieldsFixup = (fields: BlogFrontMatterFields): BlogFrontMatterF
     showToast("Missing Preview/Carousel image. You'll need to add one before downloading.", "warning");
   } else {
     const filename = getFilnamePartOfUrlPath(fields.carousel_image);
-    fields.carousel_image = `${carousel_imagepath_formd}/${filename}`;
+    fields.carousel_image = `${carousel_imagepath_for_md}/${filename}`;
   }
 
   return fields;
@@ -261,13 +266,15 @@ export const saveDataToZip = async (markdownstr: string) => {
   const {
     basename,
     imagedir,
-    carousel_imagepath_formd,
+    carousel_imagepath_for_md,
     mdfilename,
     // datedbasename,
     permalink
   } = generateFields(yamlFields);
 
-  if (!basename?.length || !imagedir?.length || !carousel_imagepath_formd?.length || !mdfilename?.length || !permalink?.length ||
+  const webcache = await caches.open(CACHE_NAME);
+
+  if (!basename?.length || !imagedir?.length || !carousel_imagepath_for_md?.length || !mdfilename?.length || !permalink?.length ||
     !yamlFields.carousel_summary.trim().length || !yamlFields.carousel_image.trim().length) {
     // this really only needs the title to work
     showToast(`Some required fields are not filled out. Going to save anyways, but double check`, "error");
@@ -290,19 +297,25 @@ export const saveDataToZip = async (markdownstr: string) => {
 
   for (const eachimgsr of imagesFromMd) {
     try {
-      const response = await fetch(eachimgsr, {
-        cache: 'force-cache',
-      });
-      if (!response.ok) {
-        console.error(`failed to fetch "${eachimgsr}"`, response);
-        continue;
+
+      // try the cache first
+      const filename = getFilnamePartOfUrlPath(eachimgsr);
+      let response = await webcache.match(`/mdedit/img/${filename}`);
+
+      if (!response) {
+        response = await fetch(eachimgsr, {
+          cache: 'force-cache',
+        });
+        if (!response.ok) {
+          console.error(`failed to fetch "${eachimgsr}"`, response);
+          continue;
+        }
       }
       const blob = await response.blob();
-      const filename = getFilnamePartOfUrlPath(eachimgsr);
       zip.file(`${imagedir}/${filename}`, blob);
     } catch(err) {
       console.error(`Error for fetching ${eachimgsr}`, err);
-      showToast(`Some images could not be saved. Check they are not on a 3rd party site. Image src should start with / not https. 
+      showToast(`Some images could not be saved. Check they are not on a 3rd party site. Image src should not start with "https:" but they should be relative or uploaded directly into the markdown. 
       Download from site and upload into the markdown to fix.`, "warning");
     }
   }
@@ -324,5 +337,10 @@ export const saveDataToZip = async (markdownstr: string) => {
 
 export const getDefaultMarkdown = (): string => {
   const yamlHeader = getYamlBlogHeader(BLANK_BLOG_FRONTMATTER_FIELDS);
-  return `---\n${yamlHeader}\n---\n\nPaste content here`;
+  return `---\n${yamlHeader}\n---\n\n \n`;
+}
+
+export const getBlogTemplateMarkdown = (): string => {
+  const yamlHeader = getYamlBlogHeader(STARTER_BLOG_FRONTMATTER_FIELDS);
+  return `---\n${yamlHeader}\n---\n\nAdd your new content here\n`;
 }

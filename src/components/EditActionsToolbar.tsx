@@ -2,21 +2,21 @@ import {ButtonGroup, Button} from "@trussworks/react-uswds";
 import {MDXEditorMethods} from "@mdxeditor/editor";
 
 import {
-  getDefaultMarkdown,
+  getBlogTemplateMarkdown,
   saveDataToZip,
 } from "../mdxcomponents/frontmatterUtils.ts";
 import {showToast} from "./showToast.tsx";
 import {MARKDOWN_LOCAL_STORAGE_KEY} from "../types/commontypes.ts";
-import {ChangeEvent, Fragment, useRef} from "react";
+import { Fragment, useRef} from "react";
 
-export const MainActionsToolbar = (props: {
+export const EditActionsToolbar = (props: {
   mdxeditorref: React.RefObject<MDXEditorMethods>,
 }) => {
   const newFromTemplate = () => {
     if (!confirm("This will replace any work you may have unsaved.\n\nContinue?")) {
       return;
     }
-    const mdtext = getDefaultMarkdown();
+    const mdtext = getBlogTemplateMarkdown();
     props.mdxeditorref?.current?.setMarkdown(mdtext);
     localStorage.setItem(MARKDOWN_LOCAL_STORAGE_KEY, mdtext);
   }
