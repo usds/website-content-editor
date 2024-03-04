@@ -18,8 +18,13 @@ Site is github pages deployed here: https://usds.github.io/website-content-edito
 - Downloads zip file of the markdown and images ready to submitted (all without a server)
 - Can "upload" some existing markdown to make quick edits.
 
-## What's still to-do:
+## Developers
+1. To deploy, merge `main` branch into `gh-pages`. [See branches](https://github.com/usds/website-content-editor/branches)
+1. The [deploy action](https://github.com/usds/website-content-editor/actions) will automatically run.
+1. Go to the github hosted website: https://usds.github.io/website-content-editor/
 
+## What's still to-do:
+- Unit tests of some kind
 - Handle different template types
 - Create a better Quote component
 - Link component showing offsite links correctly
