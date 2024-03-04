@@ -63,7 +63,7 @@ try {
   const get_response = async (request) => {
     if (request.destination !== 'image') {
       // we don't cache non-images
-      // console.log(`cache: requests not for image "${request.url}"`, request);
+      console.log(`cache: requests not for image "${request.url}"`, request);
       return fetch(request);
     }
 

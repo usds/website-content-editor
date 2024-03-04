@@ -1,8 +1,8 @@
 {
   "name": "website-content-editor",
   "short_name": "mdedit",
-  "start_url": "./",
-  "scope": ".",
+  "start_url": "/mdedit/",
+  "scope": "/mdedit/",
   "display": "standalone",
   "background_color": "#ffffff",
   "lang": "en",

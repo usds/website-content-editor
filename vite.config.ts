@@ -4,19 +4,19 @@ import svgr from 'vite-plugin-svgr';
 import {viteStaticCopy} from "vite-plugin-static-copy";
 
 export default defineConfig({
-  base: "./",
-  build: {
-    outDir: "./dist",
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes("node_modules")) {
-            return "vendor";
-          }
-        },
-      },
-    },
-  },
+  // base: "./",
+  // build: {
+  //   outDir: "./dist",
+  //   rollupOptions: {
+  //     output: {
+  //       manualChunks(id) {
+  //         if (id.includes("node_modules")) {
+  //           return "vendor";
+  //         }
+  //       },
+  //     },
+  //   },
+  // },
   plugins: [
     react(),
     // svgr "inlines" .svg so they can be easily turned into React components.
