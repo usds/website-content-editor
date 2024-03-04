@@ -4,9 +4,9 @@ import svgr from 'vite-plugin-svgr';
 import {viteStaticCopy} from "vite-plugin-static-copy";
 
 export default defineConfig({
-  // base: "./",
-  // build: {
-  //   outDir: "./dist",
+  base: "./",
+  build: {
+    outDir: "./dist",
   //   rollupOptions: {
   //     output: {
   //       manualChunks(id) {
@@ -16,7 +16,7 @@ export default defineConfig({
   //       },
   //     },
   //   },
-  // },
+  },
   plugins: [
     react(),
     // svgr "inlines" .svg so they can be easily turned into React components.
