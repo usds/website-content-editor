@@ -1,5 +1,4 @@
 import {Fragment} from "react";
-import {NavLink} from "react-router-dom";
 
 export const AboutPage = () => {
   return (<Fragment>

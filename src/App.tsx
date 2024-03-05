@@ -4,47 +4,63 @@ import '@mdxeditor/editor/style.css';
 import './styles/usdswebsite.override.css';
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-import {Fragment} from "react";
+import {Fragment, useState} from "react";
 import {BlogEditorPage} from "./pages/BlogEditorPage.tsx";
-import {NavList, Header, Title,} from "@trussworks/react-uswds";
+import {NavList, Header, Title, NavMenuButton, PrimaryNav, Grid, GridContainer,} from "@trussworks/react-uswds";
+import {HomePage} from "./pages/HomePage.tsx";
+import {AboutPage} from "./pages/AboutPage.tsx";
 
 // we use the uswds styles from usds.github.io/website-staging
 // import '@uswds/uswds/css/uswds.css';
 
+// roll our own nav. Doing anything too fancy is difficult on github pages because of paths.
+// keys are UX names which isn't great but whatever. It's just a few lines of code.
+const Pages = ["Home", "Blog Edit", "About"] as const;
+type PagesType = (typeof Pages)[number];
+type PagesMap = {
+  [key in PagesType]?: React.ReactElement;
+};
 
-// const Layout = () => {
-//   return (
-//     <Fragment>
-//       <Header basic>
-//         <div className="usa-nav-container">
-//           <div className="usa-navbar">
-//             <Title>Website Content Editor</Title>
-//             {/* A "layout route" is a good place to put markup you want to
-//           share across all the pages on your site, like navigation. */}
-//             <NavList items={
-//               [<NavLink key={"homenavlink"} to="/">Home</NavLink>,
-//                 <NavLink key={"aboutlink"} to="/about">About</NavLink>,
-//                 <NavLink key={"blogedit"} to="/blogedit">News-and-blog editor</NavLink>]
-//             } type="primary"/>
-//           </div>
-//         </div>
-//       </Header>
-//
-//
-//       {/* An <Outlet> renders whatever child route is currently active,
-//           so you can think about this <Outlet> as a placeholder for
-//           the child routes we defined above. */}
-//       <section className="usa-section">
-//         <Outlet/>
-//       </section>
-//     </Fragment>
-// );
-// }
 
 function App() {
+  const [page, SetPage] = useState<PagesType>("Home");
+  const PAGES_MAP: PagesMap = {
+    "Home": <HomePage/>,
+    "Blog Edit": <BlogEditorPage/>,
+    "About": <AboutPage/>,
+  };
+
   return (
     <Fragment>
-      <BlogEditorPage/>
+      <Header basic>
+        <div className="usa-nav-container">
+          <PrimaryNav
+            aria-label="Primary navigation"
+            items={Pages.map((eachPage) =>
+              <a key={`${eachPage}`}
+                 href=""
+                 className={eachPage === page ? "usa-nav__link usa-current" : "usa-nav__link"}
+                 onClick={(e) => {
+                   SetPage(eachPage);
+                   e.preventDefault();
+                   e.stopPropagation();
+                 }}>{eachPage}</a>)}/>
+        </div>
+      </Header>
+      <div className="usa-section">
+        <GridContainer>
+          <Grid row gap>
+            <main
+              className="usa-layout-docs__main desktop:grid-col-12 usa-prose usa-layout-docs"
+              id="main-content"
+              role={"main"}
+            >
+              <h1>Website Content Editor</h1>
+              {PAGES_MAP[page]}
+            </main>
+          </Grid>
+        </GridContainer>
+      </div>
       <ToastContainer limit={4}/>
     </Fragment>
   );

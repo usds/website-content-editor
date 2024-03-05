@@ -74,62 +74,54 @@ export const BlogEditorPage = () => {
   return (
     <Fragment>
       <EditActionsToolbar mdxeditorref={mdxeditorref}/>
-      <main id="main-content" role="main">
-        <div className="grid-container">
-          <div className="grid-row tablet:flex-row-reverse">
-            <div
-              className="tablet:grid-col-8 desktop:grid-col-12 margin-bottom-9 tablet:padding-right-4 site-c-project-content usa-prose">
-              <MDXEditor
-                ref={mdxeditorref}
-                className={"grid-container"}
-                contentEditableClassName={"tablet:grid-col-8 desktop:grid-col-12 margin-bottom-9 tablet:padding-right-4 site-c-project-content usa-prose"}
-                suppressHtmlProcessing={true}
-                markdown={""}
-                onChange={(mdtext) => saveMdText(mdtext)}
-                toMarkdownOptions={toMarkdownOptions}
-                plugins={[
-                  toolbarPlugin({
-                    toolbarContents: () => (
-                      <Fragment>
-                        <DiffSourceToggleWrapper>
-                          {' '}
-                          <InsertFrontmatterCustom/>
-                          {' '}
-                          <BlockTypeSelect/>
-                          <BoldItalicUnderlineToggles/>
-                          <CreateLink/>
-                          <ListsToggle/>
-                          <InsertThematicBreak/>
-                          {' '}
-                          <InsertImage/>
-                          {' '}
-                          <InsertTable/>
-                        </DiffSourceToggleWrapper>
-                      </Fragment>
-                    )
-                  }),
-                  frontmatterCustomPlugin(),
-                  diffSourcePlugin({diffMarkdown: oldMarkdown, viewMode: 'rich-text'}),
-                  headingsPlugin({allowedHeadingLevels: [2, 3, 4]}),
-                  imagePlugin({imageUploadHandler, disableImageResize: false, ImageDialog: ImageDialogCustom}),
-                  linkDialogPlugin(),
-                  linkPlugin(),
-                  listsPlugin(),
-                  quotePlugin(),
-                  tablePlugin(),
-                  thematicBreakPlugin()
-                ]}/>
-            </div>
-          </div>
-        </div>
-      </main>
+      <MDXEditor
+        ref={mdxeditorref}
+        className={"grid-container"}
+        contentEditableClassName={"tablet:grid-col-8 desktop:grid-col-12 margin-bottom-9 tablet:padding-right-4 site-c-project-content usa-prose"}
+        suppressHtmlProcessing={true}
+        markdown={""}
+        onChange={(mdtext) => saveMdText(mdtext)}
+        toMarkdownOptions={toMarkdownOptions}
+        plugins={[
+          toolbarPlugin({
+            toolbarContents: () => (
+              <Fragment>
+                <DiffSourceToggleWrapper>
+                  {' '}
+                  <InsertFrontmatterCustom/>
+                  {' '}
+                  <BlockTypeSelect/>
+                  <BoldItalicUnderlineToggles/>
+                  <CreateLink/>
+                  <ListsToggle/>
+                  <InsertThematicBreak/>
+                  {' '}
+                  <InsertImage/>
+                  {' '}
+                  <InsertTable/>
+                </DiffSourceToggleWrapper>
+              </Fragment>
+            )
+          }),
+          frontmatterCustomPlugin(),
+          diffSourcePlugin({diffMarkdown: oldMarkdown, viewMode: 'rich-text'}),
+          headingsPlugin({allowedHeadingLevels: [2, 3, 4]}),
+          imagePlugin({imageUploadHandler, disableImageResize: false, ImageDialog: ImageDialogCustom}),
+          linkDialogPlugin(),
+          linkPlugin(),
+          listsPlugin(),
+          quotePlugin(),
+          tablePlugin(),
+          thematicBreakPlugin()
+        ]}/>
+
       <div className={"developer_div"}>
         <Button
           type={"button"}
           accentStyle={"warm"}
           outline={true}
           unstyled={true}
-          onClick={()=> {
+          onClick={() => {
             if (confirm("Clear all settings and data? This will lose everything and start fresh.\n\nContinue?")) {
               void devResetEverything(mdxeditorref)
             }

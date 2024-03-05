@@ -231,7 +231,7 @@ export const FrontmatterCustomEditor = ({yaml, onChange}: FrontmatterCustomEdito
 
                   <Fieldset>
                     <Label htmlFor="carousel_image">
-                      Image for Carousel
+                      Image for Carousel (should be a 800x600 jpeg)
                     </Label>
                     {previewImgFilename && <img id={previewImgFilename} src={fileInputDefaultImage} className={"previewImgFilename"} />}
                     <br/>
