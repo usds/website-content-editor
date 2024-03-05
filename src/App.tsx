@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import {Fragment, useState} from "react";
 import {BlogEditorPage} from "./pages/BlogEditorPage.tsx";
-import {NavList, Header, Title, NavMenuButton, PrimaryNav, Grid, GridContainer,} from "@trussworks/react-uswds";
+import {Header, PrimaryNav, Grid, GridContainer, Title,} from "@trussworks/react-uswds";
 import {HomePage} from "./pages/HomePage.tsx";
 import {AboutPage} from "./pages/AboutPage.tsx";
 
@@ -33,6 +33,8 @@ function App() {
   return (
     <Fragment>
       <Header basic>
+        <div className={"float-left position-absolute top-1 left-105 text-bold"}>
+          Website Content Editor</div>
         <div className="usa-nav-container">
           <PrimaryNav
             aria-label="Primary navigation"
@@ -55,7 +57,6 @@ function App() {
               id="main-content"
               role={"main"}
             >
-              <h1>Website Content Editor</h1>
               {PAGES_MAP[page]}
             </main>
           </Grid>

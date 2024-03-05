@@ -38,3 +38,11 @@
 .cm-tooltip-below, .cm-tooltip {
   background-color: rgba(255, 254, 218, 0.95) !important;
 }
+
+.zoom-05 {
+  zoom: 0.5;
+}
+
+.zoom-066 {
+  zoom: 0.667;
+}

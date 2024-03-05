@@ -83,7 +83,7 @@ export const STARTER_BLOG_FRONTMATTER_FIELDS: BlogFrontMatterFields = {
   carousel_title: "New news and blog page",
   carousel_summary: `This is a blank news-and-blog page template. Click the crab icon to edit metadata. 
   Enter new content below this header preview`,
-  carousel_image: "https://usds.github.io/website-content-editor/icon-512x512.png",
+  carousel_image: "https://usds.github.io/website-content-editor/img/template-carousel.jpg",
   carousel_image_alt_text: "Test image",
   carousel_show: "false",
   tags: [],
