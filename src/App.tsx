@@ -4,9 +4,9 @@ import '@mdxeditor/editor/style.css';
 import './styles/usdswebsite.override.css';
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-import {Fragment, useState} from "react";
+import {Fragment, useReducer} from "react";
 import {BlogEditorPage} from "./pages/BlogEditorPage.tsx";
-import {Header, PrimaryNav, Grid, GridContainer, Title,} from "@trussworks/react-uswds";
+import {Header, PrimaryNav, Grid, GridContainer} from "@trussworks/react-uswds";
 import {HomePage} from "./pages/HomePage.tsx";
 import {AboutPage} from "./pages/AboutPage.tsx";
 
@@ -23,7 +23,12 @@ type PagesMap = {
 
 
 function App() {
-  const [page, SetPage] = useState<PagesType>("Home");
+  // this is basically useState that persists to localstorage
+  const [page, setPage] = useReducer((_prev: PagesType, cur: PagesType) => {
+    localStorage.setItem('currentPage', cur);
+    return cur;
+  }, (localStorage.getItem('currentPage') as PagesType) || "Home");
+
   const PAGES_MAP: PagesMap = {
     "Home": <HomePage/>,
     "Blog Edit": <BlogEditorPage/>,
@@ -34,7 +39,8 @@ function App() {
     <Fragment>
       <Header basic>
         <div className={"float-left position-absolute top-1 left-105 text-bold"}>
-          Website Content Editor</div>
+          Website Content Editor
+        </div>
         <div className="usa-nav-container">
           <PrimaryNav
             aria-label="Primary navigation"
@@ -43,7 +49,7 @@ function App() {
                  href=""
                  className={eachPage === page ? "usa-nav__link usa-current" : "usa-nav__link"}
                  onClick={(e) => {
-                   SetPage(eachPage);
+                   setPage(eachPage);
                    e.preventDefault();
                    e.stopPropagation();
                  }}>{eachPage}</a>)}/>
@@ -57,7 +63,7 @@ function App() {
               id="main-content"
               role={"main"}
             >
-              {PAGES_MAP[page]}
+              {PAGES_MAP[page] ?? PAGES_MAP.Home}
             </main>
           </Grid>
         </GridContainer>

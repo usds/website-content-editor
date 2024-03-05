@@ -3,12 +3,13 @@ import {Fragment} from "react";
 export const HomePage = () => {
   return (<Fragment>
       <p className="usa-intro">
-        This site is static only and <strong>all data</strong> is saved into your local browser.
+        This site is static-only and <strong>all data</strong> is saved into your local browser.
       </p>
       <p>
-        Build website posts with fewer mistakes. The intuitive rich text editor lets you see exactly
-        how your page will look as you create it. Save your work anytime by downloading a zip file
-        containing your edits and all associated images.
+        Build website posts with fewer mistakes. The intuitive rich text editor lets you see
+        how your page will look as you create it. Your work is saved into the browser’s cache and
+        you can download a zip file containing your edits and all associated images allow you
+        to submit them into Github using Github Desktop.
       </p>
 
       <p> ➤ <strong>Click <i>Blog Edit</i> in the top nav to begin.</strong></p>
@@ -20,12 +21,11 @@ export const HomePage = () => {
         the most handy.
       </p>
       <ul>
-        <li>Crabby will display the page meta information (aka "Frontmatter yaml header" in technobabel) as guided form,
-          to help
-          you avoid common mistakes.
+        <li>Crabby will display the page meta information (aka "Frontmatter yaml header" in technobabel)
+          as guided input form to help you avoid common mistakes.
         </li>
-        <li>Inserting images will display them in the page and save them when you Download the results.
-          For best results, correctly size images outside before uploading and use .jpg for faster rendering.
+        <li>Inserting images will display them in the page and they will appear in the correct locations
+          when you Download the results.
         </li>
         <li>The buttons on the right toggle between Markdown and Rich Text views.</li>
       </ul>
@@ -43,6 +43,8 @@ export const HomePage = () => {
       </p>
       <h2 id="section-heading-3">Tips and tricks</h2>
       <ul>
+        <li>For best results, correctly size images before uploading.</li>
+        <li>Keep image the filesizes small for faster rendering. .jpg with higher compression is recommended.</li>
         <li>Paste in rich text directly into the editor and let it reformat it as markdown. It can include images.</li>
         <li>Open an existing post’s markdown file.</li>
         <li>Paste in existing MD into the Markdown editor view including the yaml header.</li>
