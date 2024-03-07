@@ -29,29 +29,43 @@ export const yamlToBlogFields = (yamlstr: string): BlogFrontMatterFields => {
   if (yamlstr.trim().length === 0) {
     return BLANK_BLOG_FRONTMATTER_FIELDS;
   }
-  const data = YamlParser.load(yamlstr) as Record<string, string>;
+  try {
+    // sanity check that the yamlstr doesn't include syntax that will throw an error
+    const yamlparts = yamlstr.split(/^---$/gm); // we actually go MORE text that just the yml?
+    if (yamlparts.length > 2) {
+      const actual_yamlstr = yamlparts[1];
+      if (actual_yamlstr.trim().length > 2) {
+        console.warn(`yamlstr seems to contain "---" inside of it, this can mess up parser`);
+        yamlstr = actual_yamlstr;
+      }
+    }
+    const data = YamlParser.load(yamlstr) as Record<string, string>;
 
-  const author = data?.author ?? data?.byline_str ?? ""; // fallback logic for old format
+    const author = data?.author ?? data?.byline_str ?? ""; // fallback logic for old format
 
-  // if we make every field a string, then this becomes easy.
-  // Might be some reflection way to do this? Going to be verbose the first time.
-  // maybe json.parse could be used more?
-  const result: BlogFrontMatterFields = {
-    title: data.title ?? BLANK_BLOG_FRONTMATTER_FIELDS.title,
-    date: data.date ?? data.dateline_str ?? BLANK_BLOG_FRONTMATTER_FIELDS.date,
-    readtime_minutes: parseInt(data.readtime_minutes ?? data.readtime_str ?? BLANK_BLOG_FRONTMATTER_FIELDS.date),
-    author: author.length ? author : BLANK_BLOG_FRONTMATTER_FIELDS.author,
-    permalink: data.permalink ?? BLANK_BLOG_FRONTMATTER_FIELDS.permalink,
-    tags: [], // todo: fix
-    basename: data.basename ?? BLANK_BLOG_FRONTMATTER_FIELDS.basename,
+    // if we make every field a string, then this becomes easy.
+    // Might be some reflection way to do this? Going to be verbose the first time.
+    // maybe json.parse could be used more?
+    const result: BlogFrontMatterFields = {
+      title: data.title ?? BLANK_BLOG_FRONTMATTER_FIELDS.title,
+      date: data.date ?? data.dateline_str ?? BLANK_BLOG_FRONTMATTER_FIELDS.date,
+      readtime_minutes: parseInt(data.readtime_minutes ?? data.readtime_str ?? BLANK_BLOG_FRONTMATTER_FIELDS.date),
+      author: author.length ? author : BLANK_BLOG_FRONTMATTER_FIELDS.author,
+      permalink: data.permalink ?? BLANK_BLOG_FRONTMATTER_FIELDS.permalink,
+      tags: [], // todo: fix
+      basename: data.basename ?? BLANK_BLOG_FRONTMATTER_FIELDS.basename,
 
-    carousel_title: data.carousel_title ?? BLANK_BLOG_FRONTMATTER_FIELDS.carousel_title,
-    carousel_summary: data.carousel_summary ?? BLANK_BLOG_FRONTMATTER_FIELDS.carousel_summary,
-    carousel_image: data.carousel_image ?? BLANK_BLOG_FRONTMATTER_FIELDS.carousel_image,
-    carousel_image_alt_text: data.carousel_image_alt_text ?? BLANK_BLOG_FRONTMATTER_FIELDS.carousel_image_alt_text,
-    carousel_show: (data.carousel_show === "true" ? "true" : BLANK_BLOG_FRONTMATTER_FIELDS.carousel_show),
-  };
-  return result;
+      carousel_title: data.carousel_title ?? BLANK_BLOG_FRONTMATTER_FIELDS.carousel_title,
+      carousel_summary: data.carousel_summary ?? BLANK_BLOG_FRONTMATTER_FIELDS.carousel_summary,
+      carousel_image: data.carousel_image ?? BLANK_BLOG_FRONTMATTER_FIELDS.carousel_image,
+      carousel_image_alt_text: data.carousel_image_alt_text ?? BLANK_BLOG_FRONTMATTER_FIELDS.carousel_image_alt_text,
+      carousel_show: (data.carousel_show === "true" ? "true" : BLANK_BLOG_FRONTMATTER_FIELDS.carousel_show),
+    };
+    return result;
+  } catch(err) {
+    console.error(err);
+    return BLANK_BLOG_FRONTMATTER_FIELDS;
+  }
 }
 
 /** there's a pending change with the website to rename some fields */
