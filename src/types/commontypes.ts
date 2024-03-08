@@ -43,36 +43,6 @@ export const BLANK_BLOG_FRONTMATTER_FIELDS: BlogFrontMatterFields = {
   tags: [],
 };
 
-/*
----
-# Page template info (DO NOT EDIT)
-layout: default
-blog_page: true
-
-# Carousel (Edit this)
-carousel_title: "Test page"
-carousel_summary: "This is a test page template, it include problematic markdown to make checking it easier"
-# partial path to image e.g /news-and-blog/2024-03-01-test-page-img/
-# images should be 800x600 jpg
-carousel_image: /news-and-blog/2024-03-01-test-page-img/icon-512x512.png
-# accessibility text for image
-carousel_image_alt_text: "Test image"
-# should show on news and blog page. ordered by date prefix in filename
-carousel_show: true
-
-# Blog detail page (Edit this)
-title: "Test page"
-dateline_str: "Feb 30, 2024"
-readtime_str: "1"
-author: "U.S. Digital Service"
-permalink: /news-and-blog/test-page-slpm7
-basename: "test-page"
-tags: [[]]
-
----
-
-Image found in a Projects posting.
-* */
 export const STARTER_BLOG_FRONTMATTER_FIELDS: BlogFrontMatterFields = {
   title: "New news and blog page",
   date: getShortDate(new Date().toDateString()),

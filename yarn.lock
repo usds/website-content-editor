@@ -830,10 +830,10 @@
     "@lezer/common" "^1.0.0"
     "@lezer/highlight" "^1.0.0"
 
-"@mdxeditor/editor@^2.3.2":
-  version "2.9.1"
-  resolved "https://registry.yarnpkg.com/@mdxeditor/editor/-/editor-2.9.1.tgz#e6922d475fe37cc6b7810f60844b35bafab59ebd"
-  integrity sha512-YrKFmB/6gJid4CgssCy+TU1YyFfOOGv71WB2JYzi+41ZNAnMtSiEuXGv6jzQNtyp8t3i/Z5KfZl4KtHp9/14Lg==
+"@mdxeditor/editor@^2.12.1":
+  version "2.12.1"
+  resolved "https://registry.yarnpkg.com/@mdxeditor/editor/-/editor-2.12.1.tgz#fea16bfbd7a9de553ce0f9f86d995d9c8166cc72"
+  integrity sha512-8+QDABGA1pCYQUioyDIsOMum2W8riqVoolZfbiFI1nSeE1afNLk8FOALaVyAvzeoobGnSYnqD2nEUUMdHT6HtQ==
   dependencies:
     "@codemirror/lang-markdown" "^6.2.3"
     "@codemirror/merge" "^6.4.0"

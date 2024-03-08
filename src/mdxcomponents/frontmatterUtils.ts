@@ -74,6 +74,7 @@ export const getYamlBlogHeaderNew = (fields: BlogFrontMatterFields): string => {
   return `# Page template info (DO NOT EDIT)
 layout: default
 blog_page: true
+
 # Carousel (Edit this)
 carousel_title: "${fields.carousel_title}"
 carousel_summary: "${fields.carousel_summary}"
@@ -350,8 +351,9 @@ export const saveDataToZip = async (markdownstr: string) => {
 };
 
 export const getDefaultMarkdown = (): string => {
-  const yamlHeader = getYamlBlogHeader(BLANK_BLOG_FRONTMATTER_FIELDS);
-  return `---\n${yamlHeader}\n---\n\n \n`;
+  // it causes issue to auto-insert the frontmatter 100% of the time. (when cancelling edit dialog)
+  //const yamlHeader = getYamlBlogHeader(BLANK_BLOG_FRONTMATTER_FIELDS);
+  return `\n`;
 }
 
 export const getBlogTemplateMarkdown = (): string => {
