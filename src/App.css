@@ -31,14 +31,6 @@
   z-index: 100;
 }
 
-.cm-searchMatch {
-  background-color: rgba(250, 247, 2, 0.27) !important;
-}
-
-.cm-tooltip-below, .cm-tooltip {
-  background-color: rgba(255, 254, 218, 0.95) !important;
-}
-
 .zoom-05 {
   zoom: 0.5;
 }

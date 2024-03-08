@@ -87,7 +87,7 @@ export const ImageDialogCustom: React.FC = () => {
           {/*</div>*/}
 
           <div className={styles.formField}>
-            <label htmlFor="altText">Alt (Accessibility: detailed image description):</label>
+            <label htmlFor="altText">Alt (508/Accessibility: detailed image description):</label>
             <input autoComplete={"nope"} type="text" {...register('altText')} className={styles.textInput}/>
           </div>
 
