@@ -1,5 +1,4 @@
 import {toast} from "react-toastify";
-import {getShortNanoid} from "../misc.ts";
 
 export const showToast = (
   message: React.ReactNode | Error,

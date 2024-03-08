@@ -1,11 +1,7 @@
-import {customAlphabet} from "nanoid/non-secure";
 import moment from "moment";
 import {MDXEditorMethods} from "@mdxeditor/editor";
 import {CACHE_NAME} from "./types/commontypes.ts";
 
-
-// we want to avoid the risk of bad words, so we leave out vowels and `0`.
-export const getShortNanoid = (length = 6) => customAlphabet(`bcdfghjklmnpqrstvwxyz123456789`, length)();
 
 export const getFilnamePartOfUrlPath = (pathstr?: string) => pathstr?.split("/").pop() ?? "";
 

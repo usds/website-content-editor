@@ -78,7 +78,7 @@ export const BlogEditorPage = () => {
         ref={mdxeditorref}
         className={"grid-container"}
         contentEditableClassName={"tablet:grid-col-8 desktop:grid-col-12 margin-bottom-9 tablet:padding-right-4 site-c-project-content usa-prose"}
-        suppressHtmlProcessing={true}
+        suppressHtmlProcessing={false}
         markdown={""}
         onChange={(mdtext) => saveMdText(mdtext)}
         toMarkdownOptions={toMarkdownOptions}
