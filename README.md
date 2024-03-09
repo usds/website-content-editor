@@ -54,9 +54,6 @@ and `service-worker.js` are standard javascript, they are **not** transpiled
 and they don't import anything. So, some constants associated with the cache
 are duplicated and need to kept in sync.
 
-## Service-Worker
-
-
 ## Security
 Site is 100% static. All content is stored in the browser's cache and localstorage.
 
@@ -104,8 +101,10 @@ The tool loads style scripts from website staging.
 ```
 img-src 'self' https: data: blob:;
 ```
-The `https:` allows images to be loaded from anywhere. This allows the
+The `https:` allows images to be loaded from anywhere. This allows the service-worker to 
+cache images from sites that are pasted into the WYSIWYG editor.
 
+The service worker transparently passes on all requests that are not images.
 
 ## Debugging
 
