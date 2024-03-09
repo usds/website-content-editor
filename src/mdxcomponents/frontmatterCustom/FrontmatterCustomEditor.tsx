@@ -130,9 +130,8 @@ export const FrontmatterCustomEditor = ({yaml, onChange}: FrontmatterCustomEdito
     setValue("readtime_minutes", readingTimeInMinutes);
   }
   const previewImgFilename = cleanupFilename(getValues("carousel_image"));
-  const fileInputDefaultImage = previewImgFilename.length ? `/mdedit/img/${previewImgFilename}` : undefined
-
-  console.log(`inital value for carousel_show: ${getValues("carousel_show")}`)
+  const fileInputDefaultImage = previewImgFilename.length ? `/mdedit/img/${previewImgFilename}` : undefined;
+  console.log(`inital value for carousel_show: ${getValues("carousel_show")}`);
   return (
     <Fragment>
       <Dialog.Root open={frontmatterDialogOpen} onOpenChange={(open) => setFrontmatterDialogOpen(open)}>
