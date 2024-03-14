@@ -1473,10 +1473,10 @@
     "@svgr/hast-util-to-babel-ast" "8.0.0"
     svg-parser "^2.0.4"
 
-"@trussworks/react-uswds@^6.2.0":
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/@trussworks/react-uswds/-/react-uswds-6.2.0.tgz#b7f5a307c3c0cd6af7fef8ed2d0fa73b337087ec"
-  integrity sha512-B7Yi9hy+dF4A3XiXUB3BofvcNekhcb/NTldaAIM4Lt+jEd7wIFbTJc03v1inIJHUMLcke0nYFx4gOmixpivPZg==
+"@trussworks/react-uswds@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@trussworks/react-uswds/-/react-uswds-8.0.0.tgz#a681d4c86d985a9b619f197fff34aa83561e0fc5"
+  integrity sha512-VxllH/CbqKKnHgjPGJltdssPRxo/km6uNfRAC0MvYTqHcLoeg+0/5omdG6gh94KAil1ZxEqiCadbEzPIn9jg/w==
 
 "@types/acorn@^4.0.0":
   version "4.0.6"
