@@ -318,6 +318,10 @@ export const saveDataToZip = async (markdownstr: string) => {
       let response = await webcache.match(`/mdedit/img/${filename}`);
 
       if (!response) {
+        // this will likely hit a cors "opaque" issue and `response.ok` will be false
+        response = await webcache.match(eachimgsr);
+      }
+      if (!response || !response.ok) {
         response = await fetch(eachimgsr, {
           cache: 'force-cache',
         });
@@ -359,4 +363,18 @@ export const getDefaultMarkdown = (): string => {
 export const getBlogTemplateMarkdown = (): string => {
   const yamlHeader = getYamlBlogHeader(STARTER_BLOG_FRONTMATTER_FIELDS);
   return `---\n${yamlHeader}\n---\n\nAdd your new content here\n`;
+}
+
+
+/** this is found in packages/lexical/src/LexicalSelection.ts but v0.13 and mdxeditor is still on v0.12
+ * Copyright (c) Meta Platforms, Inc. and affiliates. MIT **/
+export function moveNativeSelection(
+  domSelection: Selection,
+  alter: 'move' | 'extend',
+  direction: 'backward' | 'forward' | 'left' | 'right',
+  granularity: 'character' | 'word' | 'lineboundary',
+): void {
+  // Selection.modify() method applies a change to the current selection or cursor position,
+  // but is still non-standard in some browsers.
+  domSelection.modify(alter, direction, granularity);
 }

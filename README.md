@@ -106,6 +106,31 @@ cache images from sites that are pasted into the WYSIWYG editor.
 
 The service worker transparently passes on all requests that are not images.
 
+## Build breakage
+This package as well as MDXEditor both use "lexical" libraries; therefore, both
+must use the same VERSION of that library or you'll get strange typescript errors.
+
+To make this breakage more explicit, the yarn locks in the same version as MDXEdtor (current 0.12.6 vers the 0.13 latest).
+
+
+``` json5
+"dependencies": {
+    "@lexical/react": "^0.12.6",
+    "lexical": "^0.12.6",
+    // ...
+},
+  "resolutions": {
+  "@lexical/react": "^0.12.6",
+    "lexical": "^0.12.6",
+    // ...
+},
+```
+
+If the packages ever get out of sync, you'll start getting like typescript compile warnings like this:
+> `"warning "@mdxeditor/editor > @lexical/utils > @lexical/table@0.12.6" has incorrect peer dependency "lexical@0.12.6"."
+`
+
+
 ## Debugging
 
 [details about how to debug a service worker]
