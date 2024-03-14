@@ -23,6 +23,7 @@ import {frontmatterCustomPlugin} from "../mdxcomponents/frontmatterCustom";
 import {ImageDialogCustom} from "../mdxcomponents/ImageDialogCustom.tsx";
 import {Button} from "@trussworks/react-uswds";
 import {devResetEverything} from "../misc.ts";
+import {ClearFormatting} from "../mdxcomponents/clearFormatting/ClearFormatting.tsx";
 
 
 export const BlogEditorPage = () => {
@@ -99,6 +100,7 @@ export const BlogEditorPage = () => {
                   <InsertImage/>
                   {' '}
                   <InsertTable/>
+                  <ClearFormatting />
                 </DiffSourceToggleWrapper>
               </Fragment>
             )

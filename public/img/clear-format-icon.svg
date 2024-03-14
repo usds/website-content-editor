@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="a" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="2 10 24 24">
+    <defs>
+        <style>
+            .b{font-size:28.47px;stroke:#fff;stroke-miterlimit:10;stroke-width:.57px;}
+            .b,.t{fill:#231f20;font-family:Cambria-Italic,
+            Cambria;font-style:italic;}
+            .t{font-size:24.82px;}
+        </style>
+    </defs>
+    <text class="t" transform="translate(6 28) scale(1 1)">
+        <tspan x="0" y="0">T</tspan>
+    </text>
+    <text class="b" transform="translate(15 31) rotate(-34.32) scale(1.1 1.1) skewX(-1.12)">
+        <tspan x="0" y="0">\</tspan>
+    </text>
+</svg>

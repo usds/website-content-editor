@@ -92,7 +92,9 @@ export class FrontmatterCustomNode extends DecoratorNode<React.JSX.Element> {
                 <li class="tablet:grid-col-6 desktop:grid-col-4">
                   <span class="site-c-card site-c-card--linked"><!-- span instead of link? -->
                     <img src="${fields.carousel_image}"
-                         alt="${fields.carousel_image_alt_text}" class="site-c-card__image"/>
+                         alt="${fields.carousel_image_alt_text}" 
+                         class="site-c-card__image"
+                         crossorigin="anonymous"/>
                     <div class="site-c-card__body">
                       <span class="site-c-flag">${fields.date}</span>
                       <h3 class="site-c-card__title">${fields.carousel_title}</h3>
