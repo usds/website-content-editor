@@ -45,7 +45,7 @@ export const HomePage = () => {
         <li>For best results, correctly size images before uploading. This allows the page template to control the
           size.
         </li>
-        <li>Keep image the filesizes small for faster rendering. .jpg with high quality is recommended.</li>
+        <li>Keep the image file sizes small for faster rendering. Use `.jpg` with high quality is recommended.</li>
         <li>Paste in rich text directly into the editor and let it reformat it as markdown. It can include images.</li>
         <li>Shift+paste will insert text without formatting.</li>
         <li>Open an existing post’s markdown file to edit it.</li>
