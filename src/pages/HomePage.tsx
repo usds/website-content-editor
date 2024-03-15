@@ -21,7 +21,7 @@ export const HomePage = () => {
         the most handy.
       </p>
       <ul>
-        <li>Crabby will display the page meta information (aka "Frontmatter yaml header" in technobabel)
+        <li>Crabby will display the page meta information (technically the "Frontmatter yaml header")
           as guided input form to help you avoid common mistakes.
         </li>
         <li>Inserting images will display them in the page and they will appear in the correct locations
@@ -33,7 +33,6 @@ export const HomePage = () => {
       <p>
         Once you are satisfied with your edits, download the markdown and all related images.
         They are saved locally as a zip file. The file and folder names are all correctly reflected in the markdown.
-
       </p>
 
       <p>
@@ -43,11 +42,13 @@ export const HomePage = () => {
       </p>
       <h2 id="section-heading-3">Tips and tricks</h2>
       <ul>
-        <li>For best results, correctly size images before uploading.</li>
-        <li>Keep image the filesizes small for faster rendering. .jpg with higher compression is recommended.</li>
+        <li>For best results, correctly size images before uploading. This allows the page template to control the
+          size.
+        </li>
+        <li>Keep image the filesizes small for faster rendering. .jpg with high quality is recommended.</li>
         <li>Paste in rich text directly into the editor and let it reformat it as markdown. It can include images.</li>
-        <li>Open an existing post’s markdown file.</li>
-        <li>Paste in existing MD into the Markdown editor view including the yaml header.</li>
+        <li>Shift+paste will insert text without formatting.</li>
+        <li>Open an existing post’s markdown file to edit it.</li>
       </ul>
 
     </Fragment>

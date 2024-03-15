@@ -6,13 +6,18 @@ import {useCellValues} from "@mdxeditor/gurx";
 import ClearFormatSVG from "../../../public/img/clear-format-icon.svg?react";
 import {
   $getSelection,
-  $setSelection,
-  $isRangeSelection,
-  LexicalEditor,
   $getTextContent,
+  $isRangeSelection,
+  $setSelection,
+  LexicalEditor,
+  KEY_DELETE_COMMAND,
+  SELECTION_CHANGE_COMMAND
 } from "lexical";
 import {moveNativeSelection} from "../frontmatterUtils.ts";
 
+// Reselected cleared text is a hack right now. It reselects one-character-at-a-time
+// which gets really slow for large text blocks. Work-around is to limit it.
+const MAX_SELECTION_LENGTH = 2000;
 
 /**
  * A toolbar button that allows the user to insert a thematic break (rendered as an HR HTML element).
@@ -25,7 +30,6 @@ export const ClearFormatting: React.FC = () => {
   const clearFormatting = (editor: LexicalEditor | null) => {
     editor?.update(() => {
       const selection = $getSelection();
-
       if (!$isRangeSelection(selection)) {
         return;
       }
@@ -36,20 +40,33 @@ export const ClearFormatting: React.FC = () => {
         return;
       }
 
-      {
-        const nativeSelection = window.getSelection();
-        const rootElement = editor.getRootElement();
-        const selectedText = $getTextContent();
+      const nativeSelection = window.getSelection();
+      const rootElement = editor.getRootElement();
+      const selectedText = $getTextContent();
 
-        if (
-          nativeSelection !== null &&
-          rootElement !== null &&
-          rootElement.contains(nativeSelection.anchorNode) &&
-          editor.isEditable()
-        ) {
+      if (
+        nativeSelection === null ||
+        rootElement === null ||
+        !rootElement.contains(nativeSelection.anchorNode) ||
+        !editor.isEditable()
+      ) {
+        return;
+      }
+
+      // For 95% of the time, `selection.insertRawText` just works.
+      // But sometimes it causes the lexiI don't understand the failure scenario
+      // Quickfix is deleting, then inserting.
+      // Unfortunately the Delete is in the undo buffer. :facepalm:
+      editor.dispatchCommand(KEY_DELETE_COMMAND, new KeyboardEvent("keypress"));
+
+      setTimeout(() => {
+        editor?.update(() => {
           // this replaces the elements with plaintext correctly
           // things like lists are NOT collapsed into a single line, which is what we want
           selection.insertRawText(selectedText);
+
+          // this will cause a throw if something got broken by the insert
+          editor.dispatchCommand(SELECTION_CHANGE_COMMAND, undefined);
 
           // we need to let the lexical state process those changes before we can do
           // the next step
@@ -61,8 +78,12 @@ export const ClearFormatting: React.FC = () => {
               if (!newNativeSelection) {
                 return;
               }
-              for (const _eachChar of selectedText) {
+              // because of the "select back one space" approach, limit max size
+              const selectionSize = Math.min(selectedText.length, MAX_SELECTION_LENGTH);
+
+              for (let ii = 0; ii < selectionSize; ii++) {
                 // this is literally like pressing shift + arrow left repeatedly.
+                // Not sure how slow it is for really large text
                 moveNativeSelection(newNativeSelection, 'extend', 'backward', 'character');
               }
 
@@ -81,9 +102,10 @@ export const ClearFormatting: React.FC = () => {
                 }
               }
             }); // editor.update
-          }, 100); // setTimeout
-        }
-      }
+          }, 1); // setTimeout
+        });// editor.update
+      }, 1);// setTimeout
+
     });
   };
 

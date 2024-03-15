@@ -107,7 +107,7 @@ export const BlogEditorPage = () => {
           }),
           frontmatterCustomPlugin(),
           diffSourcePlugin({diffMarkdown: oldMarkdown, viewMode: 'rich-text'}),
-          headingsPlugin({allowedHeadingLevels: [2, 3, 4]}),
+          headingsPlugin({allowedHeadingLevels: [1, 2, 3, 4, 5]}),
           imagePlugin({imageUploadHandler, disableImageResize: true, ImageDialog: ImageDialogCustom}),
           linkDialogPlugin(),
           linkPlugin(),
