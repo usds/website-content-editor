@@ -24,7 +24,7 @@
     "downshift": "^7.6.0",
     "js-yaml": "^4.1.0",
     "jszip": "^3.10.1",
-    "lexical": "^0.12.6",
+    "lexical": "^0.14.2",
     "mdast-util-from-markdown": "^2.0.0",
     "mdast-util-frontmatter": "^2.0.1",
     "mdast-util-gfm": "^3.0.0",
