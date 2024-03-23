@@ -12,13 +12,24 @@ export const DEFAULT_AUTHOR = "U.S. Digital Service";
 export const CACHE_NAME = "mdedit-cache-v1";
 export const MARKDOWN_LOCAL_STORAGE_KEY = "savedMarkdown";
 
-export interface BlogFrontMatterFields {
+export type ImpactStatementField = {
+  figure: string;
+  unit: string; // e.g. "%" "M"
+  description: string;
+};
+
+export interface FrontMatterFields {
   title: string;
   date: string;
   readtime_minutes: number;
   author: string;
   permalink: string;
   basename: string; // used for MD filename and image directory name
+
+  // project pages use these
+  agency: string;
+  project_url: string;
+  impact_statement: ImpactStatementField[];
 
   carousel_title: string;
   carousel_summary: string;
@@ -28,13 +39,19 @@ export interface BlogFrontMatterFields {
   tags: string[];
 }
 
-export const BLANK_BLOG_FRONTMATTER_FIELDS: BlogFrontMatterFields = {
+export const BLANK_FRONTMATTER_FIELDS: FrontMatterFields = {
   title: "",
   date: "",
   readtime_minutes: 1,
   author: DEFAULT_AUTHOR,
   permalink: "",
-  basename: "",
+  basename: "basename",
+
+  agency: "",
+  project_url: "",
+  impact_statement: [],
+
+
   carousel_title: "",
   carousel_summary: "",
   carousel_image: "",
@@ -43,13 +60,16 @@ export const BLANK_BLOG_FRONTMATTER_FIELDS: BlogFrontMatterFields = {
   tags: [],
 };
 
-export const STARTER_BLOG_FRONTMATTER_FIELDS: BlogFrontMatterFields = {
+export const STARTER_BLOG_FRONTMATTER_FIELDS: FrontMatterFields = {
   title: "New news and blog page",
   date: getShortDate(new Date().toDateString()),
   readtime_minutes: 1,
   author: DEFAULT_AUTHOR,
   permalink: "/news-and-blog/new-news-and-blog-page-tmpl7",
   basename: "new-news-and-blog-page",
+  agency: "",
+  project_url: "",
+  impact_statement: [],
   carousel_title: "New news and blog page",
   carousel_summary: `This is a blank news-and-blog page template. Click the crab icon to edit metadata. 
   Enter new content below this header preview`,

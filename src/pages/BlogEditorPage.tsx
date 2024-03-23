@@ -74,7 +74,7 @@ export const BlogEditorPage = () => {
 
   return (
     <Fragment>
-      <EditActionsToolbar mdxeditorref={mdxeditorref}/>
+      <EditActionsToolbar mdxeditorref={mdxeditorref} reloadCallback={(newMd) => setOldMarkdown(newMd)} />
       <MDXEditor
         ref={mdxeditorref}
         className={"grid-container"}

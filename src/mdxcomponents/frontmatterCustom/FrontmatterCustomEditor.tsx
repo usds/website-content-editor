@@ -13,7 +13,7 @@ import {useCellValues, usePublisher} from '@mdxeditor/gurx';
 import styles from '../../styles/mdxeditor.copy.module.css';
 import stylesCustom from '../../styles/mdxeditor.custom.module.css';
 import {Fieldset, Grid, GridContainer, Checkbox, FileInput, Label} from "@trussworks/react-uswds";
-import {BlogFrontMatterFields, CACHE_NAME, READING_WORDS_PER_MINUTE} from "../../types/commontypes.ts";
+import {FrontMatterFields, CACHE_NAME, READING_WORDS_PER_MINUTE} from "../../types/commontypes.ts";
 import {
   blogFieldsFixup,
   generateFields,
@@ -44,7 +44,7 @@ export const FrontmatterCustomEditor = ({yaml, onChange}: FrontmatterCustomEdito
   const getFrontMatterFields = () => {
     const fields = yamlToBlogFields(yaml);
     // we do some basic cleanup. We'll need to set it back?
-    fields.carousel_image = getFilnamePartOfUrlPath(fields.carousel_image);
+    fields.carousel_image = getFilnamePartOfUrlPath(fields.carousel_image) ?? "carousel_img.png";
     return fields;
   };
 
@@ -76,7 +76,7 @@ export const FrontmatterCustomEditor = ({yaml, onChange}: FrontmatterCustomEdito
   }, []);
 
   const onSubmit = React.useCallback(
-    (frontMatterFields: BlogFrontMatterFields) => {
+    (frontMatterFields: FrontMatterFields) => {
       const fixedUpFields = blogFieldsFixup(frontMatterFields);
       const yamlstr = getYamlBlogHeader(fixedUpFields);
       onChange(yamlstr);

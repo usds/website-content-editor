@@ -78,7 +78,7 @@ export const ImageDialogCustom: React.FC = () => {
               Click to select image from your device
             </label>
             <input type="file" {...register('file')} />
-            {filename.length? `Current: "${filename}"`: null }
+            {filename?.length ? `Current: "${filename}"`: null }
           </div>
 
           {/*<div className={styles.formField}>*/}

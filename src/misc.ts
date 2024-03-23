@@ -3,7 +3,7 @@ import {MDXEditorMethods} from "@mdxeditor/editor";
 import {CACHE_NAME} from "./types/commontypes.ts";
 
 
-export const getFilnamePartOfUrlPath = (pathstr?: string) => pathstr?.split("/").pop() ?? "";
+export const getFilnamePartOfUrlPath = (pathstr?: string) => pathstr?.split("/")?.pop()?.split("?")[0] ?? undefined;
 
 export const forceTypeBoolean = (value: string | null | boolean): boolean | null =>
   typeof value === 'boolean' ? value : value === 'true' ? true : value === 'false' ? false : null;
