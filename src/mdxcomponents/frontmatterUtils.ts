@@ -1,8 +1,8 @@
 // great primary https://404wolf.com/posts/blog/imageBlocks
 import YamlParser from "js-yaml";
 import {
-  BLANK_BLOG_FRONTMATTER_FIELDS,
-  BlogFrontMatterFields, CACHE_NAME,
+  BLANK_FRONTMATTER_FIELDS,
+  FrontMatterFields, CACHE_NAME,
   DEFAULT_AUTHOR, STARTER_BLOG_FRONTMATTER_FIELDS,
   toMarkdownOptions
 } from "../types/commontypes.ts";
@@ -25,9 +25,9 @@ import {showToast} from "../components/showToast.tsx";
 import JSZip from "jszip";
 
 
-export const yamlToBlogFields = (yamlstr: string): BlogFrontMatterFields => {
+export const yamlToBlogFields = (yamlstr: string): FrontMatterFields => {
   if (yamlstr.trim().length === 0) {
-    return BLANK_BLOG_FRONTMATTER_FIELDS;
+    return BLANK_FRONTMATTER_FIELDS;
   }
   try {
     // sanity check that the yamlstr doesn't include syntax that will throw an error
@@ -44,33 +44,39 @@ export const yamlToBlogFields = (yamlstr: string): BlogFrontMatterFields => {
     const author = data?.author ?? data?.byline_str ?? ""; // fallback logic for old format
 
     // if we make every field a string, then this becomes easy.
-    // Might be some reflection way to do this? Going to be verbose the first time.
+    // Might be some reflection way to do this? Going to be verbose for now.
     // maybe json.parse could be used more?
-    const result: BlogFrontMatterFields = {
-      title: data.title ?? BLANK_BLOG_FRONTMATTER_FIELDS.title,
-      date: data.date ?? data.dateline_str ?? BLANK_BLOG_FRONTMATTER_FIELDS.date,
-      readtime_minutes: parseInt(data.readtime_minutes ?? data.readtime_str ?? BLANK_BLOG_FRONTMATTER_FIELDS.date),
-      author: author.length ? author : BLANK_BLOG_FRONTMATTER_FIELDS.author,
-      permalink: data.permalink ?? BLANK_BLOG_FRONTMATTER_FIELDS.permalink,
+    const result: FrontMatterFields = {
+      title: data.title ?? BLANK_FRONTMATTER_FIELDS.title,
+      date: data.date ?? data.dateline_str ?? BLANK_FRONTMATTER_FIELDS.date,
+      readtime_minutes: parseInt(data.readtime_minutes ?? data.readtime_str ?? BLANK_FRONTMATTER_FIELDS.date),
+      author: author.length ? author : BLANK_FRONTMATTER_FIELDS.author,
+      permalink: data.permalink ?? BLANK_FRONTMATTER_FIELDS.permalink,
       tags: [], // todo: fix
-      basename: data.basename ?? BLANK_BLOG_FRONTMATTER_FIELDS.basename,
+      basename: data.basename ?? BLANK_FRONTMATTER_FIELDS.basename,
 
-      carousel_title: data.carousel_title ?? BLANK_BLOG_FRONTMATTER_FIELDS.carousel_title,
-      carousel_summary: data.carousel_summary ?? BLANK_BLOG_FRONTMATTER_FIELDS.carousel_summary,
-      carousel_image: data.carousel_image ?? BLANK_BLOG_FRONTMATTER_FIELDS.carousel_image,
-      carousel_image_alt_text: data.carousel_image_alt_text ?? BLANK_BLOG_FRONTMATTER_FIELDS.carousel_image_alt_text,
-      carousel_show: (data.carousel_show === "true" ? "true" : BLANK_BLOG_FRONTMATTER_FIELDS.carousel_show),
+      agency: data.agency ?? BLANK_FRONTMATTER_FIELDS.agency,
+      project_url: data.project_url ?? BLANK_FRONTMATTER_FIELDS.project_url,
+      impact_statement: [], // todo: fix
+
+      carousel_title: data.carousel_title ?? BLANK_FRONTMATTER_FIELDS.carousel_title,
+      carousel_summary: data.carousel_summary ?? BLANK_FRONTMATTER_FIELDS.carousel_summary,
+      carousel_image: data.carousel_image ?? BLANK_FRONTMATTER_FIELDS.carousel_image,
+      carousel_image_alt_text: data.carousel_image_alt_text ?? BLANK_FRONTMATTER_FIELDS.carousel_image_alt_text,
+      carousel_show: (data.carousel_show === "true" ? "true" : BLANK_FRONTMATTER_FIELDS.carousel_show),
     };
     return result;
   } catch(err) {
     console.error(err);
-    return BLANK_BLOG_FRONTMATTER_FIELDS;
+    return BLANK_FRONTMATTER_FIELDS;
   }
 }
 
 /** there's a pending change with the website to rename some fields */
-export const getYamlBlogHeaderNew = (fields: BlogFrontMatterFields): string => {
-  const tags = '[' + fields.tags?.map(s => `'${s}'`).join(',') + ']';
+export const getYamlBlogHeader = (fields: FrontMatterFields): string => {
+  const tags = YamlParser.dump([...fields.tags]);
+  const impact_statement = YamlParser.dump(fields.impact_statement);
+
   return `# Page template info (DO NOT EDIT)
 layout: default
 blog_page: true
@@ -92,11 +98,22 @@ readtime_minutes: "${fields.readtime_minutes}"
 author: "${fields.author}"
 permalink: ${fields.permalink}
 basename: "${fields.basename}"
-tags: [${tags}]
+tags: ${tags}
+
+# These are in the process of being renamed and are here for the transition, they should be removed
+dateline_str: "${fields.date}"
+byline_str: "${fields.author}"
+
+# Project details page specifics. (Edit this)
+agency: ${fields.agency}
+project_url: ${fields.project_url}
+
+# Project Impact statement (Edit this)
+impact_statement: ${impact_statement}
 `;
 }
 
-export const getYamlBlogHeader = (fields: BlogFrontMatterFields): string => {
+export const getYamlBlogHeaderOld = (fields: FrontMatterFields): string => {
   const tags = '[' + fields.tags?.map(s => `'${s}'`).join(',') + ']';
   const carousel_show = fields.carousel_show ? "true" : "false";
   return `# Page template info (DO NOT EDIT)
@@ -144,7 +161,7 @@ export const generateBasename = (title: string): string => {
 /**
  * Just trying to consolidate all the url building to a single location.
  */
-export const generateFields = (fields: BlogFrontMatterFields, resetPermalink = false): {
+export const generateFields = (fields: FrontMatterFields, resetPermalink = false): {
   basename: string, // if this is undefined, then function failed
   imagedir: string,  // references the -img/ directory
   carousel_imagepath_for_md: string, // starts with /news-and-blog, used in MD
@@ -174,7 +191,7 @@ export const generateFields = (fields: BlogFrontMatterFields, resetPermalink = f
   return {basename, imagedir, carousel_imagepath_for_md, mdfilename, datedbasename, permalink};
 };
 
-export const blogFieldsFixup = (fields: BlogFrontMatterFields, resetPermalink = false): BlogFrontMatterFields => {
+export const blogFieldsFixup = (fields: FrontMatterFields, resetPermalink = false): FrontMatterFields => {
   if (fields.title.trim() === "") {
     showToast("Must have a title to continue.", "error");
     return fields;
@@ -223,7 +240,7 @@ function isParent(node: unknown): node is Mdast.Parent {
 }
 
 interface SaveDataType {
-  yamlFields: BlogFrontMatterFields;
+  yamlFields: FrontMatterFields;
   imagesFromMd: string[];
   markdownFixedStr: string; // fixes the cache image links to use zip save director
 }

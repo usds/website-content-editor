@@ -11,6 +11,7 @@ import { Fragment, useRef} from "react";
 
 export const EditActionsToolbar = (props: {
   mdxeditorref: React.RefObject<MDXEditorMethods>,
+  reloadCallback?: (newMd:string) => void,
 }) => {
   const newFromTemplate = () => {
     if (!confirm("This will replace any work you may have unsaved.\n\nContinue?")) {
@@ -19,6 +20,9 @@ export const EditActionsToolbar = (props: {
     const mdtext = getBlogTemplateMarkdown();
     props.mdxeditorref?.current?.setMarkdown(mdtext);
     localStorage.setItem(MARKDOWN_LOCAL_STORAGE_KEY, mdtext);
+    if (props.reloadCallback) {
+      props.reloadCallback(mdtext);
+    }
   }
 
   const loadData = async (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,6 +37,10 @@ export const EditActionsToolbar = (props: {
     const cleanmdtext = mdtext.replace(`<usds@omb.eop.gov>`, 'usds@omb.eop.gov');
     props.mdxeditorref?.current?.setMarkdown(cleanmdtext);
     localStorage.setItem(MARKDOWN_LOCAL_STORAGE_KEY, mdtext);
+    if (props.reloadCallback) {
+      props.reloadCallback(mdtext);
+    }
+
     // setTimeout(() => {
     //   window.location.reload(); // needs some help loading cached images
     // }, 250);
