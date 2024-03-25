@@ -20,10 +20,11 @@ import {getDefaultMarkdown} from "../frontmatterUtils.ts";
 
 type YamlTypes = "blog" | "";
 
-type FrontmatterCustomYamlParams = {
+interface FrontmatterCustomYamlParams {
   yamlType?: YamlTypes;
  // yamlDefaultTemplate?: string;
 }
+
 /**
  * Whether the frontmatter dialog is open.
  * @group Frontmatter

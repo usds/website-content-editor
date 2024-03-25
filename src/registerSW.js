@@ -10,7 +10,7 @@ if ('serviceWorker' in navigator) {
       console.log("Service worker active");
     }
     } catch(err) {
-      console.error(`Registration failed with ${err}`, err);
+      console.error(`Registration failed with:`, err);
     }
   })
 }

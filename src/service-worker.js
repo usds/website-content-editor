@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /**
  * WARNING:
  * If you modify this file, it wouldn't hot reload.
@@ -24,21 +25,21 @@
  *  - There's no staleness check. If it caches an image from staging, then that image
  *    is changed, the old one will live on in our cache.
  * **/
-
 try {
   const CACHE_NAME = "mdedit-cache-v1"; // keep in sync with misc.ts
   let hostname = "localhost"; // overridden on activate
 
-  self.addEventListener("install", async (evt) => {
+  self.addEventListener("install",  (evt) => {
     console.log(`cache: installing. evt`, evt);
-    await self.skipWaiting();
+    self.skipWaiting(); // ignore async
   });
 
-  self.addEventListener("activate", async (evt) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    hostname = new URL(evt?.currentTarget?.serviceWorker?.scriptURL).hostname;
+  self.addEventListener("activate", (evt /** @type {ServiceWorkerGlobalScopeEventMap<"activate">} **/) => {
+    if (evt?.currentTarget?.serviceWorker?.scriptURL?.length) {
+      hostname = new URL(evt?.currentTarget?.serviceWorker?.scriptURL).hostname;
+    }
     console.log(`cache: activating: "${hostname}"`);
-    await self.skipWaiting();
+    self.skipWaiting();  // ignore async
   });
 
   /**

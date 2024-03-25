@@ -269,7 +269,7 @@ export const FrontmatterCustomEditor = ({yaml, onChange}: FrontmatterCustomEdito
                     control={control}
                     name="carousel_show"
                     defaultValue={getValues("carousel_show")}
-                    render={({field: {onChange, name, value}}) => {
+                    render={({field: {onChange, value}}) => {
                       const checked = forceTypeBoolean(value) ?? false;
                       return (
                         <Checkbox

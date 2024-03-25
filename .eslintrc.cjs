@@ -23,4 +23,9 @@ module.exports = {
     "@typescript-eslint/consistent-type-definitions": "warn",
     "@typescript-eslint/no-unused-vars": "warn",
   },
+  overrides: [
+    {
+      "files": ["src/**/*.ts", "src/**/*.tsx"],
+    }
+  ]
 }
