@@ -12,11 +12,11 @@ export const DEFAULT_AUTHOR = "U.S. Digital Service";
 export const CACHE_NAME = "mdedit-cache-v1";
 export const MARKDOWN_LOCAL_STORAGE_KEY = "savedMarkdown";
 
-export type ImpactStatementField = {
+export interface ImpactStatementField {
   figure: string;
   unit: string; // e.g. "%" "M"
   description: string;
-};
+}
 
 export interface FrontMatterFields {
   title: string;
@@ -45,7 +45,7 @@ export const BLANK_FRONTMATTER_FIELDS: FrontMatterFields = {
   readtime_minutes: 1,
   author: DEFAULT_AUTHOR,
   permalink: "",
-  basename: "basename",
+  basename: "unnammed",
 
   agency: "",
   project_url: "",

@@ -21,7 +21,7 @@ export const HomePage = () => {
         the most handy.
       </p>
       <ul>
-        <li>Crabby will display the page meta information (technically the "Frontmatter yaml header")
+        <li>Crabby will display the page meta information (technically the “Frontmatter yaml header”)
           as guided input form to help you avoid common mistakes.
         </li>
         <li>Inserting images will display them in the page and they will appear in the correct locations

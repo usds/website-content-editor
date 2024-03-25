@@ -17,6 +17,7 @@ import "./App.css";
 
 // roll our own nav. Doing anything too fancy is difficult on github pages because of paths.
 // keys are UX names which isn't great but whatever. It's just a few lines of code.
+// We could switch to <HashRouter> if this site gets complex enough
 const Pages = ["Home", "Blog Edit", "About"] as const;
 type PagesType = (typeof Pages)[number];
 type PagesMap = {

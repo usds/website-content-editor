@@ -204,10 +204,10 @@ export const blogFieldsFixup = (fields: FrontMatterFields, resetPermalink = fals
   // used if any item is missing.
   const {
     basename,
-    imagedir,
+    // imagedir,
     carousel_imagepath_for_md,
-    mdfilename,
-    datedbasename,
+    // mdfilename,
+    // datedbasename,
     permalink} = generateFields(fields, resetPermalink);
   if (fields.basename.trim() === "") {
     fields.basename = basename ?? "";

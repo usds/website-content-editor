@@ -49,6 +49,7 @@ export class FrontmatterCustomNode extends DecoratorNode<React.JSX.Element> {
   }
 
   // View - returns standard dom elements NOT react
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   createDOM(_config: EditorConfig) {
     const yamlStr = this.getYaml();
     const fields = yamlToBlogFields(yamlStr);

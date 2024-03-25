@@ -1,18 +1,13 @@
 import {TextInputProps} from "@trussworks/react-uswds/lib/components/forms/TextInput/TextInput";
-import React, {ChangeEventHandler, forwardRef, Fragment} from "react";
+import React, {ChangeEventHandler} from "react";
 import {
-  Checkbox,
   ErrorMessage, Fieldset,
-  FileInput,
-  FileInputRef,
-  FormGroup,
   Label,
   Textarea,
   TextInput
 } from "@trussworks/react-uswds";
 import {TextareaProps} from "@trussworks/react-uswds/lib/components/forms/Textarea/Textarea";
 import {RequiredMarker} from "./RequiredMarker.tsx";
-import {FileInputForwardRef} from "@trussworks/react-uswds/lib/components/forms/FileInput/FileInput";
 
 export type TextFieldUswdsProps = {
   label: string;
