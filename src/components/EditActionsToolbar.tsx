@@ -41,9 +41,9 @@ export const EditActionsToolbar = (props: {
       props.reloadCallback(mdtext);
     }
 
-    // setTimeout(() => {
-    //   window.location.reload(); // needs some help loading cached images
-    // }, 250);
+    setTimeout(() => {
+      window.location.reload(); // needs some help loading cached images
+    }, 250);
     // todo: go through images and see what's missing from cache and prompt for files
   }
 
