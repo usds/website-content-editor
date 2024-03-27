@@ -238,7 +238,6 @@ export const FrontmatterCustomEditor = ({yaml, onChange}: FrontmatterCustomEdito
                     <FileInput id={"carousel_image"}
                                {...register("carousel_image", {required: false})}
                                name={"carousel_image"}
-                               crossOrigin={"use-credentials"}
                                className={"usa-input--2xl usa-input--2xs"}
                                chooseText={"click to upload image"}
                                errorText={errors?.carousel_image?.message}
