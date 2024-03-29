@@ -19,7 +19,7 @@
     "@lexical/react": "^0.12.6",
     "@mdxeditor/editor": "^2.12.1",
     "@mdxeditor/gurx": "^1.1.1",
-    "@trussworks/react-uswds": "^8.0.0",
+    "@trussworks/react-uswds": "^6.2.0",
     "@uswds/uswds": "^3.7.1",
     "downshift": "^7.6.0",
     "js-yaml": "^4.1.0",
