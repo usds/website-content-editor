@@ -56,7 +56,7 @@ export const BLANK_FRONTMATTER_FIELDS: FrontMatterFields = {
   carousel_summary: "",
   carousel_image: "",
   carousel_image_alt_text: "",
-  carousel_show: "false",
+  carousel_show: "true",
   tags: [],
 };
 
