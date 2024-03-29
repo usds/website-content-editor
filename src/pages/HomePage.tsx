@@ -1,10 +1,12 @@
 import {Fragment} from "react";
+import {Alert} from "@trussworks/react-uswds";
 
 export const HomePage = () => {
   return (<Fragment>
-      <p className="usa-intro">
+      <Alert type={"info"} headingLevel={"h2"}>
         This site is static-only and <strong>all data</strong> is saved into your local browser.
-      </p>
+      </Alert>
+      <h2 id="section-heading-1">Website Content Editor</h2>
       <p>
         Build website posts with fewer mistakes. The intuitive rich text editor lets you see
         how your page will look as you create it. Your work is saved into the browser’s cache and
@@ -12,7 +14,7 @@ export const HomePage = () => {
         to submit them into Github using Github Desktop.
       </p>
 
-      <p> ➤ <strong>Click <i>Blog Edit</i> in the top nav to begin.</strong></p>
+      <p><strong>Click <i>Blog Edit</i> in the top nav to begin.</strong></p>
       <h2 id="section-heading-2">Basic features</h2>
 
       <img src={"./img/tutorial-1.png"} alt={"screenshot of rich editor toolbar"} className={"zoom-066"}/>
