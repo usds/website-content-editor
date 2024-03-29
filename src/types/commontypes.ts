@@ -45,7 +45,7 @@ export const BLANK_FRONTMATTER_FIELDS: FrontMatterFields = {
   readtime_minutes: 1,
   author: DEFAULT_AUTHOR,
   permalink: "",
-  basename: "unnammed",
+  basename: "",
 
   agency: "",
   project_url: "",
