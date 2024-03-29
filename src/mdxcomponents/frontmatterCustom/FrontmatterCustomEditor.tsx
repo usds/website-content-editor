@@ -235,9 +235,12 @@ export const FrontmatterCustomEditor = ({yaml, onChange}: FrontmatterCustomEdito
                     {previewImgFilename && <img id={previewImgFilename} src={fileInputDefaultImage} className={"previewImgFilename"} />}
                     <br/>
                     {previewImgFilename}
-                    <FileInput id={"carousel_image"}
+                    <FileInput
+                              onPointerEnterCapture={undefined}
+                              onPointerLeaveCapture={undefined} id={"carousel_image"}
                                {...register("carousel_image", {required: false})}
                                name={"carousel_image"}
+                               crossOrigin={"use-credentials"}
                                className={"usa-input--2xl usa-input--2xs"}
                                chooseText={"click to upload image"}
                                errorText={errors?.carousel_image?.message}
@@ -247,14 +250,14 @@ export const FrontmatterCustomEditor = ({yaml, onChange}: FrontmatterCustomEdito
                                    const file = e.target.files[0];
                                    const filename = cleanupFilename(file.name);
                                    const newHeaders = new Headers();
-                                   newHeaders.set('Content-Type','image/jpg'); // todo: support png.
+                                   newHeaders.set('Content-Type', 'image/jpg'); // todo: support png.
                                    newHeaders.set('Content-Length', Number(file.size).toString());
-                                   const response = new Response( file.stream(),
-                                     { status: 200, statusText: "ok", headers: newHeaders } );
+                                   const response = new Response(file.stream(),
+                                     {status: 200, statusText: "ok", headers: newHeaders});
                                    void webCache?.put(`/mdedit/img/${filename}`, response.clone());
                                    setValue("carousel_image", filename);
-                                 }}}
-                    />
+                                 }
+                               }}                    />
                   </Fieldset>
 
                   <TextFieldUSWDS id={"carousel_image_alt_text"}
