@@ -50,7 +50,7 @@
     "eslint-plugin-react-refresh": "^0.4.5",
     "postcss": "^8.4.33",
     "postcss-extend": "^1.0.5",
-    "postcss-mixins": "^9.0.4",
+    "postcss-mixins": "^10.0.0",
     "postcss-nesting": "^12.0.2",
     "typescript": "^5.4.3",
     "vite": "^5.0.12",
