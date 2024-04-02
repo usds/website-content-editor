@@ -61,16 +61,16 @@ export const BLANK_FRONTMATTER_FIELDS: FrontMatterFields = {
 };
 
 export const STARTER_BLOG_FRONTMATTER_FIELDS: FrontMatterFields = {
-  title: "New news and blog page",
+  title: "News and blog page",
   date: getShortDate(new Date().toDateString()),
   readtime_minutes: 1,
   author: DEFAULT_AUTHOR,
-  permalink: "/news-and-blog/new-news-and-blog-page-tmpl7",
-  basename: "new-news-and-blog-page",
+  permalink: "/news-and-blog/news-and-blog-page-tmpl1234",
+  basename: "news-and-blog-page",
   agency: "",
   project_url: "",
   impact_statement: [],
-  carousel_title: "New news and blog page",
+  carousel_title: "News and blog page",
   carousel_summary: `This is a blank news-and-blog page template. Click the crab icon to edit metadata. 
   Enter new content below this header preview`,
   carousel_image: "https://usds.github.io/website-content-editor/img/template-carousel.jpg",

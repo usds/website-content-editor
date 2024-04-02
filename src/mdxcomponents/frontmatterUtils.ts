@@ -338,7 +338,7 @@ export const saveDataToZip = async (markdownstr: string) => {
         // this will likely hit a cors "opaque" issue and `response.ok` will be false
         response = await webcache.match(eachimgsr);
       }
-      if (!response || !response.ok) {
+      if (!response?.ok) {
         response = await fetch(eachimgsr, {
           cache: 'force-cache',
         });
