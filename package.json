@@ -16,7 +16,7 @@
     "*.css"
   ],
   "dependencies": {
-    "@lexical/react": "^0.14.2",
+    "@lexical/react": "^0.14.5",
     "@mdxeditor/editor": "^2.19.0",
     "@mdxeditor/gurx": "^1.1.1",
     "@trussworks/react-uswds": "^6.2.0",
