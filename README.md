@@ -12,9 +12,15 @@ Results of edits can be saved to the local device as a zip file, including any i
 
 Site is github pages deployed here: https://usds.github.io/website-content-editor/
 
+![Screen shot of cache storage debug screen](./docs/readme-img0.png "Screen shot of cache storage debug screen")
 
+1. Load/save data
+2. Switch between WYSIWYG and markdown text editor mode.
+3. Edit page metadata (Front Matter header) via a modal dialog
+4. Read only preview of metadata. Must be edited in modal or as text.
+5. The rich editor section
 
-## What's working:
+## What's working
 
 - Heavily leverages the open source project: [MDXEditor](https://github.com/mdx-editor/editor)
 - Customizes the Frontmatter plugin with a dialog for editing our variables.
@@ -107,31 +113,41 @@ cache images from sites that are pasted into the WYSIWYG editor.
 The service worker transparently passes on all requests that are not images.
 
 ## Build breakage
-This package as well as MDXEditor both use "lexical" libraries; therefore, both
-must use the same VERSION of that library or you'll get strange typescript errors.
+> ⚠️ **This package as well as MDXEditor both use lexical and other libraries; therefore, both
+must use the same VERSION or you'll get strange typescript errors / runtime errors!**
 
-To make this breakage more explicit, the yarn locks in the same version as MDXEdtor (current 0.12.6 vers the 0.13 latest).
-
+To make this breakage more explicit, the yarn locks in the same version as MDXEdtor
 
 ``` json5
-"dependencies": {
-    "@lexical/react": "^0.12.6",
-    "lexical": "^0.12.6",
-    // ...
-},
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
   "resolutions": {
-  "@lexical/react": "^0.12.6",
-    "lexical": "^0.12.6",
-    // ...
-},
+    "@lexical/react": "^0.14.3",
+    "@mdxeditor/gurx": "^1.1.3",
+    "downshift": "^7.6.0",
+    "lexical": "^0.14.3",
+    "mdast-util-from-markdown": "^2.0.0",
+    "mdast-util-frontmatter": "^2.0.1",
+    "mdast-util-gfm": "^3.0.0",
+    "micromark-extension-gfm": "^3.0.0"
+  },
 ```
 
 If the packages ever get out of sync, you'll start getting like typescript compile warnings like this:
-> `"warning "@mdxeditor/editor > @lexical/utils > @lexical/table@0.12.6" has incorrect peer dependency "lexical@0.12.6"."
-`
+> `"warning "@mdxeditor/editor > @lexical/utils > @lexical/table@0.12.6" has incorrect peer dependency "lexical@0.12.6"."`
 
+The package from MDXEditor that determines which versions to use (aka our package must stay in sync with)
+can be found here: 
+https://github.com/mdx-editor/editor/blob/main/package.json
 
 ## Debugging
 
-[details about how to debug a service worker]
+In chrome debugger, the Applications tab shows the service workers features.
 
+You should check the "Update on reload"
+![Screen shot of service worker debug screen](./docs/readme-img1.png "Screen shot of service worker debug screen")
+
+The current list of cached images can be viewed under Cache Storage
+![Screen shot of cache storage debug screen](./docs/readme-img2.png "Screen shot of cache storage debug screen")
