@@ -41,12 +41,13 @@ export const shortDateToNanoId = (dateStr: string): string => {
     .substring(1, tempresult.length - 1);
 }
 
-export const cleanupFilename = (instr: string): string => {
-  const fileExtOffset = instr.lastIndexOf(".");
-  const filename = instr.substring(0, fileExtOffset)
+export const cleanupFilename = (inStr: string): string => {
+  const filePathClean = inStr.replace("..", ""); // sanitize
+  const fileExtOffset = filePathClean.lastIndexOf(".");
+  const filename = filePathClean.substring(0, fileExtOffset)
     .replace(/\W/gi, '-')
     .replace("--", "-");
-  const suffix = instr.substring(fileExtOffset);
+  const suffix = filePathClean.substring(fileExtOffset);
   return `${filename}${suffix}`;
 }
 
