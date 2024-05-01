@@ -81,9 +81,10 @@ export class FrontmatterCustomNode extends DecoratorNode<React.JSX.Element> {
 
     }
 
+    // NOTE: id="frontmaterCustomNode" is used by the click handler.
     // language=HTML
     newDiv.innerHTML = `
-      <div class="border-dotted-light">
+      <div class="border-dotted-light" id="frontmaterCustomNode">
         <div class="grid-container news-container">
           <section class="site-c-section">
             <div class="site-c-section__body">
