@@ -55,7 +55,7 @@
     "postcss-nesting": "^12.1.2",
     "typescript": "^5.4.5",
     "vite": "^5.2.10",
-    "vite-plugin-static-copy": "^1.0.3",
+    "vite-plugin-static-copy": "^1.0.4",
     "vite-plugin-svgr": "^4.2.0"
   },
   "peerDependencies": {
