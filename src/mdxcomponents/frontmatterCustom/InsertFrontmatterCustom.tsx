@@ -5,7 +5,7 @@ import {hasFrontmatterCustom$, insertFrontmatterCustom$} from "./index.ts";
 import classNames from "classnames";
 import styles from '../../styles/mdxeditor.copy.module.css';
 // @ts-expect-error `?react` uses svgr syntax sugar that linter doesn't understand
-import CrabSVG from "../../../public/img/crab-clean.svg?react";
+import CrabSVG from "../../img/crab-clean.svg?react";
 
 /**
  * A toolbar button that allows the user to insert a {@link https://jekyllrb.com/docs/front-matter/ | front-matter} editor (if one is not already present).

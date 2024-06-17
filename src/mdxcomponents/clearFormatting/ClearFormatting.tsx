@@ -3,7 +3,7 @@ import {activeEditor$, ButtonWithTooltip} from "@mdxeditor/editor"
 import {useCellValues} from "@mdxeditor/gurx";
 
 // @ts-expect-error `?react` uses svgr syntax sugar that linter doesn't understand
-import ClearFormatSVG from "../../../public/img/clear-format-icon.svg?react";
+import ClearFormatSVG from "../../img/clear-format-icon.svg?react";
 import {
   $getSelection,
   $getTextContent,
