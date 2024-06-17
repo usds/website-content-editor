@@ -42,7 +42,7 @@ export const shortDateToNanoId = (dateStr: string): string => {
 }
 
 export const cleanupFilename = (inStr: string): string => {
-  // this sure does seem like a bug in eslint. Everything is set to "es2021" everywhere.
+
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   const filePathClean: string = inStr.replaceAll("..", "") as string; // sanitize
   const fileExtOffset = filePathClean.lastIndexOf(".");

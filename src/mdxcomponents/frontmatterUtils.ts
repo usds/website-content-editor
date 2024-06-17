@@ -236,7 +236,11 @@ export const blogFieldsFixup = (fields: FrontMatterFields, resetPermalink = fals
 }
 
 function isParent(node: unknown): node is Mdast.Parent {
-  return (node as { children?: unknown[] }).children instanceof Array
+  try {
+    return (node as { children?: unknown[] }).children instanceof Array;
+  } catch(err) {
+    return false;
+  }
 }
 
 interface SaveDataType {
