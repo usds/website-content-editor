@@ -1,4 +1,4 @@
-import { DecoratorNode, EditorConfig, LexicalEditor, LexicalNode, NodeKey, SerializedLexicalNode, Spread } from 'lexical'
+import { DecoratorNode, EditorConfig, LexicalEditor, LexicalNode, NodeKey, SerializedLexicalNode, Spread } from 'lexical';
 import React from "react";
 import {FrontmatterCustomEditor} from "./FrontmatterCustomEditor.tsx";
 import {yamlToBlogFields} from "../frontmatterUtils.ts";
@@ -164,6 +164,6 @@ export function $createFrontmatterCustomNode(yaml: string): FrontmatterCustomNod
 /**
  * Returns `true` if the given node is a {@link FrontmatterCustomNode}.
  */
-export function $isFrontmatterCustomNode(node: LexicalNode | null | undefined): node is FrontmatterCustomNode {
+export function $isFrontmatterCustomNode(node: LexicalNode | null): node is FrontmatterCustomNode {
   return node instanceof FrontmatterCustomNode
 }

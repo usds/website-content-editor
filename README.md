@@ -116,7 +116,7 @@ The service worker transparently passes on all requests that are not images.
 > ⚠️ **This package as well as MDXEditor both use lexical and other libraries; therefore, both
 must use the same VERSION or you'll get strange typescript errors / runtime errors!**
 
-To make this breakage more explicit, the yarn locks in the same version as MDXEdtor
+To make this breakage more explicit, the yarn locks in the same version as MDXEditor
 
 ``` json5
   "peerDependencies": {
@@ -136,11 +136,17 @@ To make this breakage more explicit, the yarn locks in the same version as MDXEd
 ```
 
 If the packages ever get out of sync, you'll start getting like typescript compile warnings like this:
-> `"warning "@mdxeditor/editor > @lexical/utils > @lexical/table@0.12.6" has incorrect peer dependency "lexical@0.12.6"."`
+> ⚠️ `"warning "@mdxeditor/editor > @lexical/utils > @lexical/table@0.12.6" has incorrect peer dependency "lexical@0.12.6"."`
+
+> ⚠️ `TS2345: Argument of type 'import("/website-content-editor/node_modules/@mdxeditor/editor/node_modules/lexical/LexicalEditor").LexicalEditor | null' is not assignable to parameter of type 'import("/website-content-editor/node_modules/lexical/LexicalEditor").LexicalEditor | null'.
+Type 'import("/website-content-editor/node_modules/@mdxeditor/editor/node_modules/lexical/LexicalEditor").LexicalEditor' is not assignable to type 'import("/website-content-editor/node_modules/lexical/LexicalEditor").LexicalEditor'.
+Types of property '['constructor']' are incompatible.`
 
 The package from MDXEditor that determines which versions to use (aka our package must stay in sync with)
 can be found here: 
 https://github.com/mdx-editor/editor/blob/main/package.json
+
+Use the `resolutions` section of our package to try and make sure the versions are the same.
 
 ## Debugging
 

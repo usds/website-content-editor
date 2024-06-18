@@ -1,6 +1,7 @@
 import moment from "moment";
 import {MDXEditorMethods} from "@mdxeditor/editor";
 import {CACHE_NAME} from "./types/commontypes.ts";
+import {RefObject} from "react";
 
 
 export const getFilnamePartOfUrlPath = (pathstr?: string) => pathstr?.split("/")?.pop()?.split("?")[0] ?? undefined;
@@ -53,7 +54,7 @@ export const cleanupFilename = (inStr: string): string => {
   return `${filename}${suffix}`;
 }
 
-export const devResetEverything = async (mdxeditorref: React.RefObject<MDXEditorMethods>,) => {
+export const devResetEverything = async (mdxeditorref: RefObject<MDXEditorMethods>,) => {
   mdxeditorref.current?.setMarkdown("");
   await caches.delete(CACHE_NAME);
   localStorage.clear();

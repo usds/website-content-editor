@@ -1,6 +1,6 @@
 import {ToastContainer} from "react-toastify";
 
-import {Fragment, useReducer} from "react";
+import {Fragment, ReactElement, useReducer} from "react";
 import {BlogEditorPage} from "./pages/BlogEditorPage.tsx";
 import {Header as USWDSHeader, Grid, GridContainer} from "@trussworks/react-uswds";
 import {HomePage} from "./pages/HomePage.tsx";
@@ -21,7 +21,7 @@ import "./App.css";
 const Pages = ["Home", "Blog Edit", "About"] as const;
 type PagesType = (typeof Pages)[number];
 type PagesMap = {
-  [key in PagesType]?: React.ReactElement;
+  [key in PagesType]?: ReactElement;
 };
 
 
