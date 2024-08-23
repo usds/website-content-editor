@@ -21,9 +21,10 @@ import {EditActionsToolbar} from "../components/EditActionsToolbar.tsx";
 import {InsertFrontmatterCustom} from "../mdxcomponents/frontmatterCustom/InsertFrontmatterCustom.tsx";
 import {frontmatterCustomPlugin} from "../mdxcomponents/frontmatterCustom";
 import {ImageDialogCustom} from "../mdxcomponents/ImageDialogCustom.tsx";
-import {Button} from "@trussworks/react-uswds";
-import {devResetEverything} from "../misc.ts";
 import {ClearFormatting} from "../mdxcomponents/clearFormatting/ClearFormatting.tsx";
+import {ErrorBoundary} from "react-error-boundary";
+import {ErrorElement} from "../components/ErrorElement.tsx";
+import {ResetButton} from "../components/ResetButton.tsx";
 
 
 export const BlogEditorPage = () => {
@@ -73,8 +74,8 @@ export const BlogEditorPage = () => {
   };
 
   return (
-    <Fragment>
-      <EditActionsToolbar mdxeditorref={mdxeditorref} reloadCallback={(newMd) => setOldMarkdown(newMd)} />
+    <ErrorBoundary fallback={<div><ErrorElement/></div>}>
+      <EditActionsToolbar mdxeditorref={mdxeditorref} reloadCallback={(newMd) => setOldMarkdown(newMd)}/>
       <MDXEditor
         ref={mdxeditorref}
         className={"grid-container"}
@@ -100,7 +101,7 @@ export const BlogEditorPage = () => {
                   <InsertImage/>
                   {' '}
                   <InsertTable/>
-                  <ClearFormatting />
+                  <ClearFormatting/>
                 </DiffSourceToggleWrapper>
               </Fragment>
             )
@@ -117,17 +118,7 @@ export const BlogEditorPage = () => {
           thematicBreakPlugin()
         ]}/>
 
-      <div className={"developer_div"}>
-        <Button
-          type={"button"}
-          accentStyle={"warm"}
-          outline={true}
-          unstyled={true}
-          onClick={() => {
-            if (confirm("Clear all settings and data? This will lose everything and start fresh.\n\nContinue?")) {
-              void devResetEverything(mdxeditorref)
-            }
-          }}>Reset</Button></div>
-    </Fragment>
-  )
+        <ResetButton mdxeditorref={mdxeditorref}/>
+    </ErrorBoundary>
+  );
 }

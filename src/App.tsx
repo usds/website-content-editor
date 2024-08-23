@@ -26,11 +26,11 @@ type PagesMap = {
 
 
 function App() {
-  // this is basically useState that persists to localstorage
+  // this is basically useState that persists to sessionStorage
   const [page, setPage] = useReducer((_prev: PagesType, cur: PagesType) => {
-    localStorage.setItem('currentPage', cur);
+    sessionStorage.setItem('currentPage', cur);
     return cur;
-  }, (localStorage.getItem('currentPage') as PagesType) || "Home");
+  }, (sessionStorage.getItem('currentPage') as PagesType) || "Home");
   const PAGES_MAP: PagesMap = {
     "Home": <HomePage/>,
     "Blog Edit": <BlogEditorPage/>,

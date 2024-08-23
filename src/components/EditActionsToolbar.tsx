@@ -5,7 +5,7 @@ import {
   getBlogTemplateMarkdown,
   saveDataToZip,
 } from "../mdxcomponents/frontmatterUtils.ts";
-import {showToast} from "./showToast.tsx";
+import {showToast} from "./ShowToast.tsx";
 import {MARKDOWN_LOCAL_STORAGE_KEY} from "../types/commontypes.ts";
 import { Fragment, useRef} from "react";
 

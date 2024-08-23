@@ -1,8 +1,11 @@
-import {Fragment} from "react";
+
 import {Alert} from "@trussworks/react-uswds";
+import {ResetButton} from "../components/ResetButton.tsx";
+import {ErrorElement} from "../components/ErrorElement.tsx";
+import {ErrorBoundary} from "react-error-boundary";
 
 export const HomePage = () => {
-  return (<Fragment>
+  return (<ErrorBoundary fallback={<div><ErrorElement/></div>}>
       <Alert type={"info"} headingLevel={"h2"}>
         This site is static-only and <strong>all data</strong> is saved into your local browser.
       </Alert>
@@ -52,7 +55,7 @@ export const HomePage = () => {
         <li>Shift+paste will insert text without formatting.</li>
         <li>Open an existing post’s markdown file to edit it.</li>
       </ul>
-
-    </Fragment>
+      <ResetButton />
+    </ErrorBoundary>
   );
 }

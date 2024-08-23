@@ -21,7 +21,7 @@ import {
   shortDateToNanoId,
   toUTCDate,
 } from "../misc.ts";
-import {showToast} from "../components/showToast.tsx";
+import {showToast} from "../components/ShowToast.tsx";
 import JSZip from "jszip";
 
 
@@ -66,7 +66,7 @@ export const yamlToBlogFields = (yamlstr: string): FrontMatterFields => {
       carousel_show: (data.carousel_show === "true" ? "true" : BLANK_FRONTMATTER_FIELDS.carousel_show),
     };
     return result;
-  } catch(err) {
+  } catch (err) {
     console.error(err);
     return BLANK_FRONTMATTER_FIELDS;
   }
@@ -208,7 +208,8 @@ export const blogFieldsFixup = (fields: FrontMatterFields, resetPermalink = fals
     carousel_imagepath_for_md,
     // mdfilename,
     // datedbasename,
-    permalink} = generateFields(fields, resetPermalink);
+    permalink
+  } = generateFields(fields, resetPermalink);
   if (fields.basename.trim() === "") {
     fields.basename = basename ?? "";
   }
@@ -241,7 +242,7 @@ function isParent(node: unknown): node is Mdast.Parent {
       return false;
     }
     return (node as { children?: unknown[] }).children instanceof Array;
-  } catch(err) {
+  } catch (err) {
     return false;
   }
 }
@@ -356,7 +357,7 @@ export const saveDataToZip = async (markdownstr: string) => {
       }
       const blob = await response.blob();
       zip.file(`${imagedir}/${filename}`, blob);
-    } catch(err) {
+    } catch (err) {
       console.error(`Error for fetching ${eachimgsr}`, err);
       showToast(`Some images could not be saved. Check they are not on a 3rd party site. Image src should not start with "https:" but they should be relative or uploaded directly into the markdown. 
       Download from site and upload into the markdown to fix.`, "warning");
@@ -402,3 +403,23 @@ export function moveNativeSelection(
   // but is still non-standard in some browsers.
   domSelection.modify(alter, direction, granularity);
 }
+
+// this is used if there's a data error. just dump what we can to a file and reset.
+export const saveStringToFile = async (data: string) => {
+  const zip = JSZip(); // instance of JSZip
+  zip.file("backup.txt", data);
+
+  // now generat the zip file and trigger a "download" prompt
+  {
+    const zipData = await zip.generateAsync({
+      type: "blob",
+      streamFiles: true,
+    });
+    console.log(zipData);
+    // Create a download link for the zip file
+    const link = document.createElement("a");
+    link.href = window.URL.createObjectURL(zipData);
+    link.download = `backup.txt.zip`;
+    link.click();
+  }
+};
