@@ -1146,10 +1146,10 @@
     "@lezer/highlight" "^1.0.0"
     "@lezer/lr" "^1.4.0"
 
-"@mdxeditor/editor@^3.4.2":
-  version "3.11.0"
-  resolved "https://registry.yarnpkg.com/@mdxeditor/editor/-/editor-3.11.0.tgz#3fd68647e8021c1b00ba868094c33b06dbce8799"
-  integrity sha512-x7T9H5/o7L7FAMSqd4rcy3UcBw+L5OvKUJ+LrJw0mWbS9/10SQD52mmcQUi2ug5I0XjYpF38Rm4KNfjVLbOq/A==
+"@mdxeditor/editor@^3.11.1":
+  version "3.11.1"
+  resolved "https://registry.yarnpkg.com/@mdxeditor/editor/-/editor-3.11.1.tgz#15583f423599ecd960199af6568a594f7e5eeb1f"
+  integrity sha512-mEldSeiC91omVWj1b2iJM63g48fPsJUrR6sA29vJXYY+hB0Co8K+7A/w7ZiUlBWAp9fGAsZgbVFRPZ8MSEVjKw==
   dependencies:
     "@codemirror/lang-markdown" "^6.2.3"
     "@codemirror/language-data" "^6.5.1"
