@@ -1146,7 +1146,7 @@
     "@lezer/highlight" "^1.0.0"
     "@lezer/lr" "^1.4.0"
 
-"@mdxeditor/editor@^3.4.2":
+"@mdxeditor/editor@^3.11.1":
   version "3.11.1"
   resolved "https://registry.yarnpkg.com/@mdxeditor/editor/-/editor-3.11.1.tgz#15583f423599ecd960199af6568a594f7e5eeb1f"
   integrity sha512-mEldSeiC91omVWj1b2iJM63g48fPsJUrR6sA29vJXYY+hB0Co8K+7A/w7ZiUlBWAp9fGAsZgbVFRPZ8MSEVjKw==
