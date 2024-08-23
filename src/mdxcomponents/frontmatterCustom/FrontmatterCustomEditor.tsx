@@ -141,26 +141,33 @@ export const FrontmatterCustomEditor = ({yaml, onChange}: FrontmatterCustomEdito
   // this is used to display the FrontMatter modal.
   const [editor] = useLexicalComposerContext();
   React.useEffect(() => {
-    const unregister = mergeRegister(
-      editor.registerCommand<MouseEvent>(
-        CLICK_COMMAND,
-        (event) => {
-          // was our element clicked?
-          if (!(event.target instanceof HTMLElement)) {
-            return false;
-          }
+    try {
+      const unregister = mergeRegister(
+        editor.registerCommand<MouseEvent>(
+          CLICK_COMMAND,
+          (event) => {
+            // was our element clicked?
+            if (!(event.target instanceof HTMLElement)) {
+              return false;
+            }
 
-          if (document.getElementById("frontmaterCustomNode")?.contains(event.target)) {
-            setFrontmatterDialogOpen(!frontmatterDialogOpen);
-            return true;
-          }
-          return false;
-        },
-        COMMAND_PRIORITY_LOW
-      )
-    );
-    return () => {
-      unregister();
+            if (document.getElementById("frontmaterCustomNode")?.contains(event.target)) {
+              setFrontmatterDialogOpen(!frontmatterDialogOpen);
+              return true;
+            }
+            return false;
+          },
+          COMMAND_PRIORITY_LOW
+        )
+      );
+      return () => {
+        unregister();
+      }
+    } catch(err: unknown) {
+      if (err instanceof Error) {
+        showToast(`Error ${err.message}`, 'warning');
+        console.error(err);
+      }
     }
   }, [editor, frontmatterDialogOpen, setFrontmatterDialogOpen]);
 
