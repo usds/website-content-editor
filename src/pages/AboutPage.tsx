@@ -1,8 +1,12 @@
-import {Fragment} from "react";
+
 import {Link} from "@trussworks/react-uswds";
+import {ErrorElement} from "../components/ErrorElement.tsx";
+import {ErrorBoundary} from "react-error-boundary";
+import {ResetButton} from "../components/ResetButton.tsx";
 
 export const AboutPage = () => {
-  return (<Fragment>
+  return (
+    <ErrorBoundary fallback={<div><ErrorElement/></div>}>
     <main id="main-content" role="main">
       <div className="grid-container">
         <div className="grid-row tablet:flex-row-reverse">
@@ -13,7 +17,7 @@ export const AboutPage = () => {
           </div>
         </div>
       </div>
+      <ResetButton />
     </main>
-
-  </Fragment>);
+    </ErrorBoundary>);
 }

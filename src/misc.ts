@@ -1,7 +1,5 @@
 import moment from "moment";
-import {MDXEditorMethods} from "@mdxeditor/editor";
 import {CACHE_NAME} from "./types/commontypes.ts";
-import {RefObject} from "react";
 
 
 export const getFilnamePartOfUrlPath = (pathstr?: string) => pathstr?.split("/")?.pop()?.split("?")[0] ?? undefined;
@@ -43,9 +41,7 @@ export const shortDateToNanoId = (dateStr: string): string => {
 }
 
 export const cleanupFilename = (inStr: string): string => {
-
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-  const filePathClean: string = inStr.replaceAll("..", "") as string; // sanitize
+  const filePathClean: string = inStr.replaceAll("..", ""); // sanitize
   const fileExtOffset = filePathClean.lastIndexOf(".");
   const filename = filePathClean.substring(0, fileExtOffset)
     .replace(/\W/gi, '-')
@@ -54,8 +50,7 @@ export const cleanupFilename = (inStr: string): string => {
   return `${filename}${suffix}`;
 }
 
-export const devResetEverything = async (mdxeditorref: RefObject<MDXEditorMethods>,) => {
-  mdxeditorref.current?.setMarkdown("");
+export const devResetEverything = async () => {
   await caches.delete(CACHE_NAME);
   localStorage.clear();
   window.location.reload();
