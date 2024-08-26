@@ -51,7 +51,7 @@
     "eslint-plugin-react": "^7.34.2",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
-    "node": "^20.17.0",
+    "node": "^22.7.0",
     "postcss": "^8.4.41",
     "postcss-extend": "^1.0.5",
     "postcss-mixins": "^10.0.1",
